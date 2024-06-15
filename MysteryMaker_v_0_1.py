@@ -158,7 +158,7 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
                                          [60,20,20])
     if catShopsanityChecks[0] == "Late Shopsanity":
         itemListString = AddStringToListString(itemListString,
-                                               "-------------------------303--------3f000----")
+                                               "-------------------------303--------3fc00----")
         wgtsShopsanityPrices = [50,35,15]
     if catShopsanityChecks[0] == "Full Shopsanity":
         itemListString = AddStringToListString(itemListString,
@@ -354,10 +354,10 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
                                                "----------8100-40000000-7800000---7f37ffe----------------------")
     if catLooseRupees[0] == "All Red and Blue":
         itemListString = AddStringToListString(itemListString,
-                                               "---------8410-8103-c0000000-7c7c10c---7f37ffe------f041fff-ffb00183-c0000000--------------")
+                                               "---------8410-8103-c0000000-7c7c10c---7f37ffe------f041fff-ffb00183-c3003e00--------------")
     if catLooseRupees[0] == "All Red, Blue, and Green":
         itemListString = AddStringToListString(itemListString,
-                                               "---------1ffff-8000ffff-fdef7800-7fffffc---7f37ffe--1e7-fffc2cff-fffffeff-80000000-f041fff-ffb00183-c0000000--------------")
+                                               "---------1ffff-8000ffff-fdef7800-7fffffc---7f37ffe--1e7-fffc2cff-fffffeff-80000000-f041fff-ffb00183-c3003e00--------------")
         settings["OverrideHintPriorities"][0].remove("MaskScents")
         gossipHintsTakenByAlways -= 1
         hardOptions += 1
