@@ -158,7 +158,7 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
                                          [60,20,20])
     if catShopsanityChecks[0] == "Late Shopsanity":
         itemListString = AddStringToListString(itemListString,
-                                               "-------------------------303--------3fc00----")
+                                               "-------------------------303--------3f000----")
         wgtsShopsanityPrices = [50,35,15]
     if catShopsanityChecks[0] == "Full Shopsanity":
         itemListString = AddStringToListString(itemListString,
