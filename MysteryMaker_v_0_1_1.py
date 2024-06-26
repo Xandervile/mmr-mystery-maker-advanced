@@ -24,6 +24,17 @@ def RemoveEntryFromListString(liststring, word, value):
     bitstringWords.reverse()
     return "-".join(bitstringWords)
 
+def CheckEntryInListString(liststring, word, value):
+    bitstringWords = liststring.split("-")
+    bitstringWords.reverse()
+    existingWord = bitstringWords[word]
+    if existingWord == '':
+        existingWord = '0'
+    if int(existingWord,16) | int(value,16) == int(existingWord,16):
+        return True
+    else:
+        return False
+
 def AddStringToListString(liststring, newstring):
     liststringWords = liststring.split("-")
     newstringWords = newstring.split("-")
@@ -38,6 +49,35 @@ def AddStringToListString(liststring, newstring):
             if liststringWords[i] == '0':
                 liststringWords[i] = ''
     return "-".join(liststringWords)
+
+def RemoveStringFromListString(liststring, newstring):
+    liststringWords = liststring.split("-")
+    newstringWords = newstring.split("-")
+    for i in range(min([len(liststringWords),len(newstringWords)])):
+        if (liststringWords[i] != '' or newstringWords[i] != ''):
+            if liststringWords[i] == '':
+                liststringWords[i] = '0'
+            if newstringWords[i] == '':
+                newstringWords[i] = '0'
+            liststringWords[i] = hex((int(liststringWords[i],16) ^
+                                     int(newstringWords[i],16)) &
+                                     int(liststringWords[i],16))[2:]
+            if liststringWords[i] == '0':
+                liststringWords[i] = ''
+    return "-".join(liststringWords)
+
+def CheckStringInListString(liststring, newstring):
+    liststringWords = liststring.split("-")
+    newstringWords = newstring.split("-")
+    for i in range(min([len(liststringWords),len(newstringWords)])):
+        if (liststringWords[i] != '' or newstringWords[i] != ''):
+            if liststringWords[i] == '':
+                liststringWords[i] = '0'
+            if newstringWords[i] == '':
+                newstringWords[i] = '0'
+            if (int(liststringWords[i],16) | int(newstringWords[i],16)) != int(liststringWords[i],16):
+                return False
+    return True
     
 def GenerateMysterySettings(inputFilename, outputSuffix="output"):
     random.seed()
@@ -50,6 +90,16 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
     startListString = settings["CustomStartingItemListString"]
     junkListString = settings["CustomJunkLocationsString"]
 
+    remainsShuffleActive = False
+    fairyHuntActive = False
+
+    if (CheckStringInListString(itemListString,
+                                "-----f00000--------------------------------")):
+        if ("GreatFairyRewards" in settings["BossRemainsMode"]):
+            fairyHuntActive = True
+        else:
+            remainsShuffleActive = True
+      
     gossipHintsTakenByAlways = 9
     GOSSIP_HINTS_LIMIT = 14
 
@@ -58,6 +108,12 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
 
     hardOptions = 0
     HARD_OPTIONS_LIMIT = 2
+
+    if (fairyHuntActive == True):
+        itemListString = AddStringToListString(itemListString,
+                                               "--------------------------3fffffff-fffffffc----------")
+        junkListString = AddStringToListString(junkListString,
+                                               "--------------------------3fffffff-fffffffc----------")
 
     catSongsanity = random.choices(["No change","Mix songs with items"],[65,35])
     if catSongsanity[0] == "Mix songs with items":
@@ -68,10 +124,13 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
         gossipHintsTakenByAlways += 1
         nonzeroCategories += 1
 
+    wgtsStartingBossRemains = [70,25,5]
+    if (remainsShuffleActive == True):
+        wgtsStartingBossRemains = [100,0,0]
     catStartingBossRemains = random.choices(["No change","One","Two"],[70,25,5])
-    if catStartingBossRemains[0] == "One":
+    if catStartingBossRemains[0] == "One" and fairyHuntActive == False:
         settings["BossRemainsMode"] = "Blitz1"
-    if catStartingBossRemains[0] == "Two":
+    if catStartingBossRemains[0] == "Two" and fairyHuntActive == False:
         settings["BossRemainsMode"] = "Blitz2"
 
     catStartingSwordShield = random.choices(["No change","Shuffled"],[75,25])
@@ -158,7 +217,7 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
                                          [60,20,20])
     if catShopsanityChecks[0] == "Late Shopsanity":
         itemListString = AddStringToListString(itemListString,
-                                               "-------------------------303--------3f000----")
+                                               "-------------------------3--------3f000----")
         wgtsShopsanityPrices = [50,35,15]
     if catShopsanityChecks[0] == "Full Shopsanity":
         itemListString = AddStringToListString(itemListString,
@@ -197,12 +256,22 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
                                       "All stray fairies"],
                                      [60,30,10])
     if catStrayFairies[0] == "Chest fairies + CT":
-        itemListString = AddStringToListString(itemListString,
-                                               "--------------------------3fff83f0-7f003802----------")
+        if (fairyHuntActive == False):
+            itemListString = AddStringToListString(itemListString,
+                                                   "--------------------------3fff83f0-7f003802----------")
+        else:
+            itemListString = AddEntryToListString(itemListString,10,"2")
+            junkListString = RemoveStringFromListString(junkListString,
+                                                        "--------------------------3fff83f0-7f003800----------")
     if catStrayFairies[0] == "All stray fairies":
-        itemListString = AddStringToListString(itemListString,
-                                               "--------------------------3fffffff-fffffffe----------")
-        settings["StrayFairyMode"] = "Default"
+        if (fairyHuntActive == False):
+            itemListString = AddStringToListString(itemListString,
+                                                   "--------------------------3fffffff-fffffffe----------")
+            settings["StrayFairyMode"] = "Default"
+        else:
+            itemListString = AddEntryToListString(itemListString,10,"2")
+            junkListString = RemoveStringFromListString(junkListString,
+                                                        "--------------------------3fffffff-fffffffc----------")
     if catStrayFairies[0] != "No change":
         nonzeroCategories += 1
 
@@ -256,15 +325,20 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
     catScoopsanity = random.choices(["No change","Shuffled with scoops"],
                                        [75,25])
     if catScoopsanity[0] == "Shuffled with scoops":
-        itemListString = AddStringToListString(itemListString,
+        if catSoilsanity[0] == "Shuffled":
+            itemListString = AddStringToListString(itemListString,
+                                               "---------------------------------fdc0000----")
+        else:
+            itemListString = AddStringToListString(itemListString,
                                                "---------------------------------ffc0000----")
+        settings["OverrideHintPriorities"][1].append("BottleCatchBigPoe")
         nonzeroCategories += 1
 
 
     catHitSpots = random.choices(["No change","Shuffled"], [70,30])
     if catHitSpots[0] == "Shuffled":
         itemListString = AddStringToListString(itemListString,
-                                               "-------1ffffff-ffffffff-fffe0000----------------------------")
+                                               "-------1ffffff-ffffffff-fffe0000---8000000-------------------------")
         nonzeroCategories += 1
 
     catTokensanity = random.choices(["No change","Shuffled"], [80,20])
@@ -276,7 +350,7 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
     catCratesAndBarrels = random.choices(["No change","Shuffled"], [70,30])
     if catCratesAndBarrels[0] == "Shuffled":
         itemListString = AddStringToListString(itemListString,
-                                               "---10000------------c0000-2000--3c200--30--1f07c-8000008-10040100-20000000------------")
+                                               "---------------c0000-2000--3c200--30--1f07c-8000008-10040100-20000000------------")
         nonzeroCategories += 1
 
     catKeatonGrass = random.choices(["No change","Shuffled"], [70,30])
@@ -285,26 +359,28 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
                                                "-----1f-fffffc00-------------------------------")
         nonzeroCategories += 1
 
-    catGossipFairies = random.choices(["No change","Shuffled"], [70,30])
+    catGossipFairies = random.choices(["No change","Shuffled"], [100,0])
     if catGossipFairies[0] == "Shuffled":
         itemListString = AddStringToListString(itemListString,
                                                "-100000-ffffff00-----------------------------------")
         nonzeroCategories += 1
 
-    catButterflyFairies = random.choices(["No change","Shuffled"], [70,30])
-    if catButterflyFairies[0] == "Shuffled":
+    catButterflyAndWellFairies = random.choices(["No change","Shuffled"], [80,20])
+    if catButterflyAndWellFairies[0] == "Shuffled":
         itemListString = AddStringToListString(itemListString,
-                                               "-1fe00000------------------------------------")
+                                               "1fe-1fe00000------------------------------------")
         nonzeroCategories += 1
 
-
+    wgtsLongQuests = [50,15,15,15,5]
     wgtsFrogs = [75,25]
+    if catSongsanity[0] == "No change":
+        wgtsLongQuests = [50,15,5,25,5]
     catLongQuests = random.choices(["No change",
                                     "Anju and Kafei",
                                     "Baby Zoras",
                                     "Frog Choir",
                                     "All Long Quests"],
-                                   [50,15,15,15,5])
+                                   wgtsLongQuests)
     if catLongQuests[0] == "Anju and Kafei" or catLongQuests[0] == "All Long Quests":
         junkListString = RemoveEntryFromListString(junkListString,2,"400000")
         settings["OverrideHintPriorities"][0].append("MaskCouple")
@@ -332,6 +408,7 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
     if catFrogs[0] == "Shuffled":
         itemListString = AddStringToListString(itemListString,
                                                "1-e0000000------------------------------------")
+        settings["OverrideHintPriorities"][1].append("FrogGreatBayTemple")
         if catLongQuests[0] == "Frog Choir" or catLongQuests[0] == "All Long Quests":
             hardOptions += 1
         nonzeroCategories += 1
@@ -468,8 +545,8 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
             itemListString = AddEntryToListString(itemListString,34,"80")
             settings["OverrideHintPriorities"][0].append("NotebookUniteAnjuAndKafei")
         settings["OverrideHintPriorities"][0].append("NotebookEscapeFromSakonSHideout")
-        settings["OverrideHintPriorities"][1].append("NotebookPostmansFreedom")
-        settings["OverrideHintPriorities"][1].append("MaskPostmanHat")
+        settings["OverrideHintPriorities"][2].append("NotebookPostmansFreedom")
+        settings["OverrideHintPriorities"][2].append("MaskPostmanHat")
         settings["OverrideHintPriorities"][1].append("NotebookPurchaseCuriosityShopItem")
         settings["OverrideHintPriorities"][1].append("MaskAllNight")
         settings["OverrideHintPriorities"][2].append("NotebookDeliverPendant")
@@ -492,14 +569,27 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
     if nonzeroCategories < NONZERO_CATEGORIES_MINIMUM:
         return ''
        
-    if hardOptions >= HARD_OPTIONS_LIMIT:
-        if catStartingBossRemains[0] != "No change":
-            catStartingBossRemains[0] = "Two*"
-            settings["BossRemainsMode"] = "Blitz2"
-        else:
-            catStartingBossRemains[0] = "One*"
-            settings["BossRemainsMode"] = "Blitz1"
-
+    if (remainsShuffleActive == False and fairyHuntActive == False):
+        if hardOptions >= HARD_OPTIONS_LIMIT:
+            if catStartingBossRemains[0] != "No change":
+                catStartingBossRemains[0] = "Two*"
+                settings["BossRemainsMode"] = "Blitz2"
+            else:
+                catStartingBossRemains[0] = "One*"
+                settings["BossRemainsMode"] = "Blitz1"
+    elif (fairyHuntActive == True):
+        if hardOptions >= HARD_OPTIONS_LIMIT:
+            if catStartingBossRemains[0] != "No change":
+                catStartingBossRemains[0] = "Two"
+            else:
+                catStartingBossRemains[0] = "One"
+        if catStartingBossRemains[0] == "One":
+            startListString = AddStringToListString(startListString,
+                                                    "e-1c0038-700000--")
+        elif catStartingBossRemains[0] == "Two":
+            startListString = AddStringToListString(startListString,
+                                                    "3e-7c00f8-1f00000--")
+    
     settings["CustomItemListString"] = itemListString
     settings["CustomStartingItemListString"] = startListString
     settings["CustomJunkLocationsString"] = junkListString
@@ -515,12 +605,24 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
     spoilerlogFilename = spoilerlogFilename + "_MysterySpoiler.txt"
 
     with open(spoilerlogFilename, "w") as spoiler_file:
-        print("MMR Mystery Maker v0.1 -- Mystery Spoiler Log",file=spoiler_file)
+        print("MMR Mystery Maker v2.0 -- Mystery Spoiler Log",file=spoiler_file)
         print("Base settings: ", inputFilename,file=spoiler_file)
         print("  Output file: ", outputFilename,file=spoiler_file)
+        if (remainsShuffleActive == True):
+            print("Remains Shuffle is active",file=spoiler_file)
+        if (fairyHuntActive == True):
+            print("Fairy Hunt is active",file=spoiler_file)
         print("=============================================",file=spoiler_file)
         print("               Songsanity: ", catSongsanity[0],file=spoiler_file)    
-        print("    Starting Boss Remains: ", catStartingBossRemains[0],file=spoiler_file)
+        if (remainsShuffleActive == False and fairyHuntActive == False):
+            print("    Starting Boss Remains: ", catStartingBossRemains[0],file=spoiler_file)
+        elif (fairyHuntActive == True):
+            startingFairyString = "No change"
+            if catStartingBossRemains[0] == "One":
+                startingFairyString = "Three from each set"
+            elif catStartingBossRemains[0] == "Two":
+                startingFairyString = "Five from each set"
+            print("   Starting Stray Fairies: ", startingFairyString,file=spoiler_file)
         print("Starting Sword and Shield: ", catStartingSwordShield[0],file=spoiler_file)
         print("     Starting Random Item: ", catStartingRandomItem[0],file=spoiler_file)
         print("     Starting Random Song: ", catStartingRandomSong[0],file=spoiler_file)
@@ -538,8 +640,7 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
         print("              Tokensanity: ", catTokensanity[0],file=spoiler_file)
         print("       Crates and Barrels: ", catCratesAndBarrels[0],file=spoiler_file)
         print("             Keaton Grass: ", catKeatonGrass[0],file=spoiler_file)
-        print("           Gossip Fairies: ", catGossipFairies[0],file=spoiler_file)
-        print("        Butterfly Fairies: ", catButterflyFairies[0],file=spoiler_file)
+        print("   Butterfly/Well Fairies: ", catButterflyAndWellFairies[0],file=spoiler_file)
         print("              Long Quests: ", catLongQuests[0],file=spoiler_file)
         print("                    Frogs: ", catFrogs[0],file=spoiler_file)
         print("             Loose Rupees: ", catLooseRupees[0],file=spoiler_file)
@@ -561,7 +662,7 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
 argParser = argparse.ArgumentParser(description="Randomly generates Mystery settings files for MMR and runs MMR.CLI to roll seeds with them.")
 argParser.add_argument("-n", dest="numberOfSettingsFiles",type=int,default=1,
                     help="create multiple settings/seeds at once")
-argParser.add_argument("-i", "--input", dest="inputFile",default="Fifth_Mystery_base.json",
+argParser.add_argument("-i", "--input", dest="inputFile",default="Default_Mystery_base.json",
                     help="base MMR settings file")
 argParser.add_argument("--settings-only", dest="settingsOnly", action="store_true",
                     help="only generate settings; don't roll any seeds")

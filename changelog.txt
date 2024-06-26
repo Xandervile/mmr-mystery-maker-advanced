@@ -1,0 +1,74 @@
+Mystery Maker / Default Settings release 2.0
+
+Major changes
+- Remains Shuffle and Fairy Hunt settings now are specially supported by the mystery script!
+  Giving the script an MMR settings file with all remains shuffled will activate Fairy Hunt mode
+  (if Boss Remains Mode is also set to Great Fairy Remains) or Remains Shuffle mode (otherwise)
+- Extra base settings files are included for Remains Shuffle and Fairy Hunt. To make Fairy Hunt
+  more race-friendly, special win conditions are in effect.
+  * Remains Shuffle matches default settings, except that remains are shuffled.
+    Tatl will hint the remains' regions at the start of a cycle.
+  * In the Fairy Hunt settings file, all Stray Fairies are shuffled and junked, and all remains are
+    shuffled and placed on Great Fairy Rewards. Victory Mode is set to Three Boss Remains and
+    Direct To Credits; turning in *three* full sets of fairies wins the game *immediately*!
+    The Fairy Fountains will hint the stray fairies' regions.
+- Certain categories and weights have been changed. See below for details.
+
+Category changes
+- Gossip Fairies is now disabled in default settings (30% -> 0%).
+  Gossip Fairies can require major backtracking if Epona's and Healing are found later in the seed;
+  delaying gossip visits until then is not viable at all due to gossip hints' importance in Mystery.
+  Given that the checks require many extra song plays in any event, and that most gossips are already
+  routed in anyway, the category isn't interesting enough to justify the added tedium and play time
+  for race-appropriate settings.
+- Butterfly Fairies is now Butterfly and Well Fairies. Decreased weight (30% -> 20%).
+  The "Well Fairies" are the eight floating fairies in Beneath the Well's left side fairy fountain,
+  which requires Blue Potion (and water, and a bug) to reach. Adding these to Butterfly Fairies keeps
+  runners from having to blindly visit the well fairy fountain every seed.
+  The remaining 1.16 floating fairy checks (in pots and a barrel) could be added in future versions
+  should there be both interest from players and a resource to point players to the checks.
+- Crates and Barrels no longer shuffles Great Bay Temple Entrance Room Barrel, which has a
+  floating fairy.
+  This is to make Crates and Barrels consistent with Snowsanity and Potsanity, which don't include
+  snowballs/pots that give floating fairies in vanilla.
+- The Late Shopsanity option no longer shuffles the Ocean and Canyon Scrub Purchases.
+  This halves the chance of the Canyon Scrub's Blue Potion being shuffled (40% -> 20%) which helps
+  make left side well access more straightforward on average in the wake of Well Fairies being added.
+- Hit Spots now shuffles Swordsman School Gong.
+  In West Clock Town, strike the Swordsman School Gong at the top or bottom of any hour (xx:00 or
+  xx:30). This is in logic with any transformation mask or the Kokiri Sword.
+- When Scoopsanity and Soilsanity are both active, Bottle: Bug is not shuffled.
+  Soilsanity requires 15 bugs, one for each check; gathering that many could take prohibitive
+  amounts of time if Bottle: Bug is placed on a late or low-quantity scoop like Bottle: Big Poe.
+- Scoopsanity now adds Bottle: Big Poe as a tier 2 hint instead of Bottle: Deku Princess.
+  Bottle: Deku Princess is checkable (or Blitz-junked) over the course of every seed, whereas
+  Bottle: Big Poe's locations are much less regularly visited.
+- When Songsanity is not active, Long Quests is less likely to add Baby Zoras (20% -> 10% total) and
+  more likely to add Frog Choir (20% -> 30% total).
+  Even when enabled, it's uncommon for a long quest to become relevant in a seed, as a required item
+  needs to be placed on it. This isn't true of Baby Zoras with Songsanity off, which will very often
+  have a required song. Of the other two long quests, Frog Choir is the better candidate to get the
+  extra weight in this case, as it's vulnerable to Blitz-junking (very much so if Frogs aren't
+  shuffled!)
+- Frogs now adds Frog in Great Bay Temple as a tier 2 hint (previously unhinted).
+  This is the least accessible of the four frogs and the most inconvenient frog to revisit if
+  Don Gero's Mask is found late in a seed.
+- The All Notebook Entries option now adds Postman's Freedom as a tier 3 hint (formerly tier 2).
+  This ensures that all seeds continue to include all tier 2 hints (even if Cowsanity + Scoopsanity +
+  + Frogs + All Notebook Entries are all shuffled!).
+
+Script options
+- The script now detects Remains Shuffle and Fairy Hunt settings in base settings files
+  and will adjust accordingly.
+- Remains Shuffle will be active if the base settings file shuffles all boss remains.
+  Remains Shuffle seeds will never give starting boss remains: the Starting Boss Remains category
+  is disabled and reaching the hard option maximum will not add an extra remains.
+- Fairy Hunt will be active if the base settings file sets Boss Remains Mode to "Great Fairy Rewards".
+  When Fairy Hunt is active:
+  * All 60 Dungeon Stray Fairies are shuffled and junked.
+  * Starting Boss Remains and reaching the hard option maximum give extra starting Stray Fairies
+    instead of remains. Blitz will not be set.
+    + One starting boss remains becomes three Stray Fairies from each set.
+    + Two starting boss remains become five Stray Fairies from each set.
+  * The Stray Fairies category is still rolled; when active, it will unjunk the corresponding 
+    dungeon Stray Fairies. The Clock Town Stray Fairy is still added as normal.

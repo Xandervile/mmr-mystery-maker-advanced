@@ -71,7 +71,7 @@
     "StartingItemMode": "None",
     "CustomItemListString": "-------------------------40c-80000000----21ffff-ffffffff-ffffffff-f0000000-7bbeefff-7fffffff-eef1fffe-ffffffff",
     "CustomStartingItemListString": "200000--1f800-5800000-",
-    "CustomJunkLocationsString": "------------------------------200000----82-80c00000-8000201-8000f000",
+    "CustomJunkLocationsString": "------------------------------200000----82-80c00000-8000201-8000f001",
     "TrapAmount": "None",
     "TrapWeights": {},
     "TrapAppearance": "MajorItems",
