@@ -605,7 +605,7 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
     spoilerlogFilename = spoilerlogFilename + "_MysterySpoiler.txt"
 
     with open(spoilerlogFilename, "w") as spoiler_file:
-        print("MMR Mystery Maker v2.0 -- Mystery Spoiler Log",file=spoiler_file)
+        print("MMR Mystery Maker v2.1 -- Mystery Spoiler Log",file=spoiler_file)
         print("Base settings: ", inputFilename,file=spoiler_file)
         print("  Output file: ", outputFilename,file=spoiler_file)
         if (remainsShuffleActive == True):

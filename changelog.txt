@@ -1,3 +1,9 @@
+Mystery Maker / Default Settings release 2.1
+Major changes
+- Updated base settings files for MMR v1.16.0.10 compatibility.
+  * For default Mystery and Remains Shuffle, Oath and Boss Remains hints are enabled.
+  * For Fairy Hunt, Fairy and Skull hints are enabled.
+
 Mystery Maker / Default Settings release 2.0
 
 Major changes
