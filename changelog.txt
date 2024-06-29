@@ -1,3 +1,7 @@
+Mystery Maker / Default Settings release 2.2
+Bug fixes
+- Removed Pirates' Fortress Barrel Maze Egg Pot 1 and 2 from Crates and Barrels, as intended.
+
 Mystery Maker / Default Settings release 2.1
 Major changes
 - Updated base settings files for MMR v1.16.0.10 compatibility.

@@ -350,7 +350,7 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
     catCratesAndBarrels = random.choices(["No change","Shuffled"], [70,30])
     if catCratesAndBarrels[0] == "Shuffled":
         itemListString = AddStringToListString(itemListString,
-                                               "---------------c0000-2000--3c200--30--1f07c-8000008-10040100-20000000------------")
+                                               "---------------c0000-2000--3c200--30--1f078-8000008-10000100-20000000------------")
         nonzeroCategories += 1
 
     catKeatonGrass = random.choices(["No change","Shuffled"], [70,30])
@@ -605,7 +605,7 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
     spoilerlogFilename = spoilerlogFilename + "_MysterySpoiler.txt"
 
     with open(spoilerlogFilename, "w") as spoiler_file:
-        print("MMR Mystery Maker v2.1 -- Mystery Spoiler Log",file=spoiler_file)
+        print("MMR Mystery Maker v2.2 -- Mystery Spoiler Log",file=spoiler_file)
         print("Base settings: ", inputFilename,file=spoiler_file)
         print("  Output file: ", outputFilename,file=spoiler_file)
         if (remainsShuffleActive == True):
