@@ -1,3 +1,17 @@
+Mystery Maker / Default Settings release 2.3
+Major changes
+- The Fairy Hunt settings file now enables Detect Stray Fairies (shimmering GF Mask).
+- The Fairy Hunt settings file now gives no foolish hints (instead of 3).
+- In Fairy Hunt seeds, Boss Keys are never shuffled.
+- The Mystery Settings document now clarifies that Potsanity's Temples and Side Dungeons setting
+  includes Secret Shrine (new full list: Woodfall Temple, Snowhead Temple, Deku Palace, 
+  Pirates' Fortress, Ocean Spider House, Beneath the Well, Ikana Castle, and Secret Shrine). 
+  This was true in previous seeds, but undocumented.
+
+Script changes
+- The script now accounts for the input settings' WotH and Foolish counts when determining how many
+  Gossip Stone hint slots are free for extra always hints.
+
 Mystery Maker / Default Settings release 2.2
 Bug fixes
 - Removed Pirates' Fortress Barrel Maze Egg Pot 1 and 2 from Crates and Barrels, as intended.

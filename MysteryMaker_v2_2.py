@@ -100,7 +100,7 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
         else:
             remainsShuffleActive = True
       
-    gossipHintsTakenByAlways = 9
+    gossipHintsTakenByAlways = 3 + settings["OverrideNumberOfRequiredGossipHints"] + settings["OverrideNumberOfNonRequiredGossipHints"]
     GOSSIP_HINTS_LIMIT = 14
 
     nonzeroCategories = 0
@@ -290,11 +290,14 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
     if catEntrancesTemples[0] != "No change" or catEntrancesBossRooms[0] != "No change":
         nonzeroCategories += 1
 
+    wgtsKeysanityBossKeys = [70,0,15,15]
+    if (fairyHuntActive == True):
+        wgtsKeysanityBossKeys = [100,0,0,0]
     catKeysanityBossKeys = random.choices(["No change",
                                            "Doors open",
                                            "Shuffled within area",
                                            "Shuffled anywhere"],
-                                          [70,0,15,15])
+                                          wgtsKeysanityBossKeys)
     if catKeysanityBossKeys[0] == "Doors open":
         settings["BossKeyMode"] = "DoorsOpen"
         itemListString = AddStringToListString(itemListString,
@@ -371,10 +374,10 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
                                                "1fe-1fe00000------------------------------------")
         nonzeroCategories += 1
 
-    wgtsLongQuests = [50,15,15,15,5]
+    wgtsLongQuests = [50,15,5,25,5]
     wgtsFrogs = [75,25]
-    if catSongsanity[0] == "No change":
-        wgtsLongQuests = [50,15,5,25,5]
+    if catSongsanity[0] != "No change":
+        wgtsLongQuests = [50,15,15,15,5]
     catLongQuests = random.choices(["No change",
                                     "Anju and Kafei",
                                     "Baby Zoras",
@@ -605,7 +608,7 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
     spoilerlogFilename = spoilerlogFilename + "_MysterySpoiler.txt"
 
     with open(spoilerlogFilename, "w") as spoiler_file:
-        print("MMR Mystery Maker v2.2 -- Mystery Spoiler Log",file=spoiler_file)
+        print("MMR Mystery Maker v2.3 -- Mystery Spoiler Log",file=spoiler_file)
         print("Base settings: ", inputFilename,file=spoiler_file)
         print("  Output file: ", outputFilename,file=spoiler_file)
         if (remainsShuffleActive == True):
