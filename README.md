@@ -39,5 +39,3 @@ And if you wish to package the script into an .exe yourself:
 Enjoy!
 
 FifthWhammy
-
-Install Python (https://www.python.org) in order to use this script. This version was developed and tested on Python 3.12.3, but any later version should be fine.
