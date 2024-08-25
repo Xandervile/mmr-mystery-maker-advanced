@@ -1,3 +1,190 @@
+Mystery Maker / Default Settings release 3.0
+Major changes
+- MMR Mystery Maker is now available as a standalone executable! No Python or command line required!
+- Chest Fairies, except for STT's Death Armos and Updraft Fire Ring (the two STT "flip fairies"),
+  are now shuffled in all seeds.  Clock Town Stray Fairy is shuffled in all seeds.
+  The remaining stray fairies (including Death Armos and Updraft Fire Ring) will still appear in some seeds.
+- Fierce Deity's Mask Anywhere returns to Mystery as a special category. It's always active if FD is selected
+  as the random starting item; otherwise, it's active 45% of the time. 
+  When active, FD Anywhere and some FD Anywhere-specific tricks will be in logic!
+- Just like Small Key Mode, Boss Key Mode is now Doors Open by default. Boss Key chests are always shuffled.
+  If Keysanity: Boss Keys is active, Boss Keys will appear and the doors will be locked.
+  (In Fairy Hunt seeds, Keysanity: Boss Keys is still never active. Doors Open will always be in effect there.) 
+- Beyond that, both Keysanity categories have been changed significantly: options for both Boss Keys and
+  Small Keys are now "Doors Open", "Shuffle Within Their Temple", and "Shuffle Within Any Temple". Boss Keys
+  Within Any Temple is counted as a hard option.
+  Warning: when Boss Keys and Small Keys appear, they are not considered by WotH or foolish hints! A foolish
+  temple can still contain required keys! This is how MMR handles the Keep Within Temples mode for keys.
+- Only 2 foolish hints are now given (formerly 3). The limit for WotHs, foolishes, and always hints (aka Tier 1
+  hints) on gossips has been lowered to 12, ensuring that at least two Tier 2 hints will appear on gossips in
+  every seed. See below for details.
+- To mitigate Mystery's complexity for new learners and improve the relevance of temples, certain other 
+  categories, weights, and settings have been changed. See below for details.
+
+Script changes
+- MMR Mystery Maker is now packaged as a standalone executable. Users can download and run Mystery Maker
+  alongside their MMR install without needing a Python installation or command line experience.
+  Placing MysteryMaker.exe in the same directory as your MMR install is recommended for ease of use.
+  For interested parties, the source script remains available in the project GitHub along with instructions for
+  creating the .exe yourself using PyInstaller (https://pyinstaller.org/en/stable/index.html).
+- A GUI now appears when Mystery Maker is run without any command-line options. The GUI allows users to browse
+  to their desired settings file and MMR.CLI.exe, specify options, and generate seeds.
+  GUI-less operation is still available: adding any command line argument will bypass the GUI and begin
+  generating right away using the specified options and unchanged defaults.
+- Added an option ("-r" on the command line) to specify an MMR.CLI.exe in any location. This allows the
+  MysteryMaker.exe to be kept in a different directory: when run this way, all output (including MMR's output!)
+  will be placed in an "output" directory inside Mystery Maker's current directory. 
+
+Category and settings changes
+- Dungeon maps and compasses are no longer shuffled (they're back to being starting items).
+  Info on temple and boss locations can no longer be obtained from them.
+  The new "Map Reveals Location" and "Compass Reveals Boss" toggles in MMR 1.16 often allowed for players to
+  nearly or even completely deduce all location shuffles before even entering a temple, making location shuffles
+  significantly less interesting. 
+- Seeds reaching the hard option limit no longer grant a bonus starting remains.
+  This effect made Frog Choir + Frogs (and the new Boss Keys Within Any Temple) likely to junk or diminish
+  themselves by being selected. Starting Boss Remains was tweaked to compensate.
+- The Starting Boss Remains category is more likely to grant two starting boss remains (5% -> 10%).
+  Starting with one remains stays at 25%.
+  Due to the hard option limit bonus, the probability of Mystery 2.x seeds giving two remains
+  was actually about 8%.  With the bonus gone in 3.0, this change helps preserve the opportunity for
+  players to experience a blitz-2 seed. 
+- Seeds now always grant a free starting item. The Bunny Hood and Adult's Wallet are now starting item options;
+  Magic is removed as a starting item option.
+  FD Anywhere is always enabled if the Fierce Deity's Mask is a starting item (see below).
+  * Deku Mask: 9% -> 10% 
+  * Goron Mask: 9% -> 10%
+  * Zora Mask: 9% -> 10%
+  * Fierce Deity's Mask: 3% -> 10%
+  * Bow: 4% -> 10%
+  * Hookshot: 4% -> 10%
+  * Wallet: 0% -> 10%
+  * Empty Bottle (Dampe's): 0% -> 10%
+  * Great Fairy's Sword: 3% -> 5%
+  * Bunny Hood: 0% -> 5%
+  * Bomb Bag and Blast Mask stay at 5% each.
+  * Magic is removed (4% -> 0%).
+  Guaranteeing a starting random item and expanding the item pool helps add variety to seeds and
+  encourages novel lines of play in the early game.
+- Added a new category: Fierce Deity's Mask Anywhere. Options are "no change" (55%) and "on" (45%).
+  When active, FD Anywhere is enabled. Use of FD is in logic for certain checks!
+  FD Anywhere doesn't add or change any checks. Like the starting categories, it won't count toward the
+  minimum category limit. This is only rolled when FD isn't granted by Starting Random Item (FD Anywhere will
+  always be on if you start with it).
+  Returning from Mystery 1.15, FD Anywhere is an exciting option that allows players to traverse Termina in
+  new and interesting ways, which makes it a perfect candidate for Mystery.
+- New FD-specific tricks for easier FD jumps and jump slashes have been enabled in all base settings files:
+  * Skull Kid With FD
+  * Straw Roof as FD
+  * Big Octo Skip as FD
+  * Powder Keg Challenge Access as FD
+  * Path to Snowhead as FD
+  * Path to Snowhead Pillar as FD
+  * Climb Stone Tower as FD
+  All of these will only affect logic when FD Anywhere is on and FD is accessible in the seed.
+- All seeds now grant a free starting song (beyond Time and Soaring). Starting Random Song weights are now:
+  No extra song: 40% -> 0% 
+  Epona's Song: 25% -> 40%
+  Any other song except for Oath to Order: 35% -> 60%
+  Swamp Music Statue is now always junked, regardless of Songsanity.
+  Guaranteeing a starting song removes a Songsanity-related conditional change. Additionally, Oath to Order
+  offers no positive value at the start of a seed; excluding it means that the Oath hint won't be immediately
+  invalidated and allows the remaining songs to be weighted neatly at 10 each.
+- Many conditional changes, mostly to weights (e.g. blitz making entrance shuffles more likely), are
+  removed. Some of the removed weight increases are partially applied to the base weights.
+  * Starting Random Song is no longer affected by Songsanity. See above for more on Starting Random Song.
+  * Scoopsanity is no longer affected by Soilsanity--Bottle: Bug is never shuffled regardless.
+  * Entrances: Temples is no longer more likely with blitz. Increased base weight (30% or 60% -> 45%).
+  * Entrances: Boss Rooms is no longer more likely with blitz. Increased base weight (25% or 50% -> 30%).
+  * Long Quests is no longer affected by Songsanity. See below for more on Long Quests.
+  * Frogs is no longer more likely with the Frog Choir option. Increased base weight (25% or 50% -> 35%).
+  Note that Shopsanity: Checks being active will still make Shopsanity: Prices more likely to be active. 
+  Frogs + Frog Choir is still a hard option.
+  Every extra conditional change adds more for new Mystery runners to learn and for experienced Mystery
+  runners to remember. While conditional changes aren't without merit (indeed, a couple are added in 3.0!)
+  their added complexity means that using them sparingly is ideal.
+- Chest Fairies, except for STT's Death Armos and Updraft Fire Ring, are shuffled in all seeds.
+  Death Armos and Updraft Fire Ring can still be added by All Stray Fairies, which is now more likely to
+  be active (10% -> 30%).
+  When All Stray Fairies is selected, both Death Armos and Updraft Fire Ring are sometimes hints.
+  This change addresses both previous versions' tendency for overworld-heavy seeds and the recent interest in
+  more dungeon play in standard-style seeds. The "flip fairies" are marked outliers in terms of effort required,
+  so they're removed from guaranteed appearance and may be hinted when they do appear.
+  Existing precedent set by Blitz and Scrubs should make the exclusion easier to remember.  
+- Both Keysanity: Boss Keys and Keysanity: Small Keys are reworked. Both Boss Keys and Small Keys use the 
+  options and weights below, but are each rolled separately:
+  * Doors Open: 50% for Boss Keys, 60% for Small Keys
+  * Shuffled Within Their Temple ("Keep Within Temples" + "Keep Within Area"): 30% Boss, 20% Small
+  * Shuffled Within Any Temple ("Keep Within Temples"): 20% Boss (hard option!), 20% Small
+  Even if required, Boss Keys and Small Keys can be in temples hinted foolish! Keys will also never be
+  hinted WotH.
+  In Fairy Hunt seeds, Boss Keys are still always off.
+  This change is intended to promote more temple play as well as slightly relieve pressure on hint capacity
+  (as Boss Keys can no longer add a WotH). Boss Keys Shuffled Within Any Temple very often results in more
+  dungeon dipping, so it is designated as a hard option in recognition of the extra time consumed.
+- Hit Spots is split into two active options: One Rupee Each and All Rupees. The new One Rupee Each option
+  shuffles only one rupee at each hit spot, reducing the check count from 73 to 25. All Rupees is now much
+  rarer, but can still appear (70%/0%/30% -> 70%/25%/5%).
+  Among categories of similar rarity, full Hit Spots had an exceptional number of checks, especially in
+  Sphere 0. This change lets the category appear without heavily skewing the early game too often.
+- Tokensanity is split into two active options: One House and Both Houses. The new One House option shuffles
+  all tokens in only one of the spider houses, chosen at random. Both Houses is now much rarer, but can still
+  appear (80%/0%/20% -> 80%/15%/5%).
+  Even one Spider House has plenty of impact on a seed, and Starting Random Item is even more able to shift them
+  earlier. There's no need to require both houses to appear as a pair. 
+- Long Quests is reworked to remove All Long Quests and the Songsanity conditional changes.
+  * No Long Quests: 50% -> 35%
+  * Anju and Kafei: 15% -> 20%
+  * Baby Zoras: 5% or 15% -> 15% 
+  * Frog Choir: 25% or 15% -> 30% -- when Frogs is on, this is a hard option!
+  Because an individual Long Quest check is still rarely required even when it's active (except for Baby Zoras
+  in non-Songsanity!), All Long Quests was likely to just eat up three hint slots (or two hints + relevant Eggs)
+  which doesn't make a good contribution to a seed. Frog Choir remains favored due to its interactions with
+  temples and vulnerability to Blitz-junking.
+- Minigames no longer has an "All Minigames" option. The single-minigame option gains that weight (15% -> 20%)
+  keeping the total 20% chance of the category being active.
+  As with All Long Checks, the hint capacity requirements of All Minigames make it difficult to justify.
+  The new additions to the hard option list also made the removal of All Minigames attractive.
+- Minigames no longer shuffles Beaver Race 2. Skip Younger Beaver is now always off.
+  In testing, Skip Younger Beaver does not allow both Beaver Race checks to be done at once (unlike Double
+  Archery Rewards). Therefore Beaver Race 2 is removed to save runners from repeating the race.
+- Snowsanity now exclusively uses the new "Any-Day Snowballs" option when active. This only shuffles snowball
+  checks that are available on all three days (still excluding the supply snowballs by the Mountain Village
+  and Snowhead owls). This takes the day-specific snowballs in Mountain Village and Twin Islands out of play,
+  but spring snowballs are still shuffled. Unlike its predecessor, Any-Day Snowballs is not a hard option.
+  Increased base weight (10% -> 15%).
+  This change significantly reduces the complexity of the category while trimming its check count
+  to 46 from 64, bringing it closer to categories like Keaton Grass and Tokensanity. Snowsanity does have enough
+  breadth (7 in spring, 6 in Snowhead, 5 in SHT) to justify a modest weight increase.
+- Some overworld-heavy categories have had their total weights adjusted:
+  * Keaton Grass: 30% -> 25%
+  * Butterfly and Well Fairies: 20% -> 25%
+  * Potsanity: 25% -> 20% (taking 5% from the Temples and Side Dungeons option)
+  * Bombers' Notebook: 30% -> 20% (taking 10% from the Meetings Only option)
+- Other hint changes:
+  * Only 2 foolish hints are given (formerly 3).
+  * To aid in understanding, the three hint tiers are given official names:
+    = "Always" hints are guaranteed to appear on gossips when their check is active.
+    = "Minor always" hints are guaranteed to appear when active, but they may be placed on a Garo hint slot.
+    = "Sometimes" hints fill out the remaining hint slots. 
+  * WotHs, foolishes, and always hints cannot take up more than 12 gossip hint slots. At least 2 gossip hint
+    slots will be left open for minor always hints in every seed.
+  * Boat Archery is now an always hint instead of a minor always hint.
+  * Soilsanity adds Ranch Day 1 Soil as a sometimes hint when active.
+  * Small Keys Within Any Temple promotes Ice Arrow Chest to a minor always hint when active.
+  * Frogs adds Frog in Woodfall Temple as a sometimes hint when active.
+  * Full Potsanity adds Butler Race Dual Pot as a minor always hint when active.
+  * When either (or both of) Butterfly and Well Fairies or Potsanity are active, Well Left Path Chest is
+    removed from the sometimes hint list.
+- Fairy Hunt changes:
+  * Starting Boss Remains is no longer rolled or converted to starting Stray Fairies.
+  * Boss Keys are off (Doors Open) in all Fairy Hunt seeds. Keysanity: Boss Keys is still not rolled.
+
+Bug fixes
+- Prevented Starting Boss Remains from being rolled in Remains Shuffle mode.
+- Added Cow Beneath the Well (tier 2 / minor always) when Cowsanity is active.
+- Fixed handling of absolute paths for base settings files.
+
 Mystery Maker / Default Settings release 2.3
 Major changes
 - The Fairy Hunt settings file now enables Detect Stray Fairies (shimmering GF Mask).
