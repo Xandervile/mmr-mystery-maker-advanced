@@ -64,8 +64,8 @@ def openOptionsGui():
     remainHuntChance_spinbox = ttk.Spinbox(mainframe, width=5, from_=0, to=100,textvariable=remainHuntChance)
     remainHuntChance_spinbox.grid(column=2, row=6, sticky=W)
 
-    totalChance = StringVar(value="0")
-    totalChance_spinbox = ttk.Spinbox(mainframe, width=5, from_=0, to=100,textvariable=totalChance)
+    totalChance = StringVar(value="1")
+    totalChance_spinbox = ttk.Spinbox(mainframe, width=5, from_=1, to=100,textvariable=totalChance)
     totalChance_spinbox.grid(column=2, row=7, sticky=W)
 
     numberToGenerate = StringVar(value="1")
