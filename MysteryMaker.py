@@ -21,6 +21,12 @@ def openOptionsGui():
     def browseForBaseSettingsFile(*args):
         baseSettingsFilePath.set(filedialog.askopenfilename())
 
+    def browseForFairySettingsFile(*args):
+        fairySettingsFilePath.set(filedialog.askopenfilename())
+
+    def browseForRemainsSettingsFile(*args):
+        remainsSettingsFilePath.set(filedialog.askopenfilename())
+
     def browseForCommandLineExe(*args):
         mmrCommandLineExePath.set(filedialog.askopenfilename())
 
@@ -38,25 +44,52 @@ def openOptionsGui():
     baseSettingsFilePath_entry = ttk.Entry(mainframe, width=70, textvariable=baseSettingsFilePath)
     baseSettingsFilePath_entry.grid(column=2, row=1, sticky=(W, E))
 
+    fairySettingsFilePath = StringVar(value="Mystery_Fairy_Hunt_base.json")
+    fairySettingsFilePath_entry = ttk.Entry(mainframe, width=70, textvariable=fairySettingsFilePath)
+    fairySettingsFilePath_entry.grid(column=2, row=2, sticky=(W, E))
+
+    remainsSettingsFilePath = StringVar(value="Mystery_Remains_Shuffle_base.json")
+    remainsSettingsFilePath_entry = ttk.Entry(mainframe, width=70, textvariable=remainsSettingsFilePath)
+    remainsSettingsFilePath_entry.grid(column=2, row=3, sticky=(W, E))
+	
     mmrCommandLineExePath = StringVar(value="MMR.CLI.exe")
     mmrCommandLineExePath_entry = ttk.Entry(mainframe, width=70, textvariable=mmrCommandLineExePath)
-    mmrCommandLineExePath_entry.grid(column=2, row=2, sticky=(W, E))
+    mmrCommandLineExePath_entry.grid(column=2, row=4, sticky=(W, E))
+	
+    fairyHuntChance = StringVar(value="0")
+    fairyHuntChance_spinbox = ttk.Spinbox(mainframe, width=5, from_=0, to=100,textvariable=fairyHuntChance)
+    fairyHuntChance_spinbox.grid(column=2, row=5, sticky=W)
+	
+    remainHuntChance = StringVar(value="0")
+    remainHuntChance_spinbox = ttk.Spinbox(mainframe, width=5, from_=0, to=100,textvariable=remainHuntChance)
+    remainHuntChance_spinbox.grid(column=2, row=6, sticky=W)
+
+    totalChance = StringVar(value="0")
+    totalChance_spinbox = ttk.Spinbox(mainframe, width=5, from_=0, to=100,textvariable=totalChance)
+    totalChance_spinbox.grid(column=2, row=7, sticky=W)
 
     numberToGenerate = StringVar(value="1")
     numberToGenerate_spinbox = ttk.Spinbox(mainframe, width=5, from_=1, to=100,textvariable=numberToGenerate)
-    numberToGenerate_spinbox.grid(column=2, row=3, sticky=W)
+    numberToGenerate_spinbox.grid(column=2, row=8, sticky=W)
 
     makeSettingsOnly = StringVar(value="0")
     makeSettingsOnly_checkbutton = ttk.Checkbutton(mainframe, text="Only make settings file", variable=makeSettingsOnly)
-    makeSettingsOnly_checkbutton.grid(column=1, row=4, sticky=E)
+    makeSettingsOnly_checkbutton.grid(column=1, row=9, sticky=E)
 
     ttk.Button(mainframe, text="Browse...", command=browseForBaseSettingsFile).grid(column=3, row=1, sticky=W)
-    ttk.Button(mainframe, text="Browse...", command=browseForCommandLineExe).grid(column=3, row=2, sticky=W)
-    ttk.Button(mainframe, text="Randomize", command=guiStartRandomize).grid(column=3, row=4, sticky=W)
+    ttk.Button(mainframe, text="Browse...", command=browseForFairySettingsFile).grid(column=3, row=2, sticky=W)
+    ttk.Button(mainframe, text="Browse...", command=browseForRemainsSettingsFile).grid(column=3, row=3, sticky=W)
+    ttk.Button(mainframe, text="Browse...", command=browseForCommandLineExe).grid(column=3, row=4, sticky=W)
+    ttk.Button(mainframe, text="Randomize", command=guiStartRandomize).grid(column=3, row=8, sticky=W)
 
     ttk.Label(mainframe, text="Custom base MMR settings file:").grid(column=1, row=1, sticky=E)
-    ttk.Label(mainframe, text="Custom path to MMR.CLI.exe:").grid(column=1, row=2, sticky=E)
-    ttk.Label(mainframe, text="# of seeds:").grid(column=1, row=3, sticky=E)
+    ttk.Label(mainframe, text="Custom fairy hunt MMR settings file:").grid(column=1, row=2, sticky=E)
+    ttk.Label(mainframe, text="Custom remains hunt MMR settings file:").grid(column=1, row=3, sticky=E)
+    ttk.Label(mainframe, text="Weight of Fairy Hunt:").grid(column=1, row=5, sticky=E)
+    ttk.Label(mainframe, text="Weight of Remain Hunt:").grid(column=1, row=6, sticky=E)
+    ttk.Label(mainframe, text="Total Weight:").grid(column=1, row=7, sticky=E)
+    ttk.Label(mainframe, text="Custom path to MMR.CLI.exe:").grid(column=1, row=4, sticky=E)
+    ttk.Label(mainframe, text="# of seeds:").grid(column=1, row=8, sticky=E)
 
     for child in mainframe.winfo_children(): 
         child.grid_configure(padx=5, pady=5)
@@ -68,7 +101,12 @@ def openOptionsGui():
     guiWindow.mainloop()
     return [(windowForceClosed.get() == "1"),
             baseSettingsFilePath.get(),
+            fairySettingsFilePath.get(),
+            remainsSettingsFilePath.get(),
             mmrCommandLineExePath.get(),
+            (int)(fairyHuntChance.get()),
+            (int)(remainHuntChance.get()),
+            (int)(totalChance.get()),
             (int)(numberToGenerate.get()),
             (makeSettingsOnly.get() == "1")]
 
@@ -153,10 +191,13 @@ def FilenameOnly(pathstring):
     filename = filename[(filename.rfind("\\") + 1):]
     return filename
     
-def GenerateMysterySettings(inputFilename, outputSuffix="output"):
+def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairyWeight, remainWeight, totalWeight, outputSuffix="output"):
+
     random.seed()
 
-    with open(inputFilename, "r") as read_file:
+    randomFilename = random.choices([fairyFilename, remainsFilename, inputFilename], [fairyWeight, remainWeight, max(totalWeight - remainWeight - fairyWeight, 0)])
+
+    with open(randomFilename[0], "r") as read_file:
         data = json.load(read_file)
 
     settings = data["GameplaySettings"]
@@ -715,12 +756,11 @@ def GenerateMysterySettings(inputFilename, outputSuffix="output"):
     with open(outputFilename, "w") as write_file:
         json.dump(data,write_file,indent=4)
 
-    spoilerlogFilename = outputFilename.removesuffix(".json")
-    spoilerlogFilename = spoilerlogFilename + "_MysterySpoiler.txt"
+    spoilerlogFilename = "MysterySpoiler.txt"
 
     with open(spoilerlogFilename, "w") as spoiler_file:
         print("MMR Mystery Maker", MYSTERY_MAKER_VERSION,"-- Mystery Spoiler Log",file=spoiler_file)
-        print("Base settings: ", FilenameOnly(inputFilename),file=spoiler_file)
+        print("Base settings: ", FilenameOnly(randomFilename),file=spoiler_file)
         print("  Output file: ", outputFilename,file=spoiler_file)
         print("=============================================",file=spoiler_file)
         if (remainsShuffleActive == True):
@@ -778,12 +818,22 @@ argParser.add_argument("-n", dest="numberOfSettingsFiles",type=int,default=1,
                     help="create multiple settings/seeds at once")
 argParser.add_argument("-i", "--input", dest="inputFile",default="Default_Mystery_base.json",
                     help="base MMR settings file")
+argParser.add_argument("-f", "--finput", dest="fairyFile",default="Mystery_Fairy_Hunt_base.json",
+                    help="Fairy Hunt MMR settings file")
+argParser.add_argument("-rh", "--rhinput", dest="remainsFile",default="Mystery_Remains_Shuffle_base.json",
+                    help="Remains Hunt MMR settings file")
 argParser.add_argument("-r", "--randomizer-exe", dest="randomizerExe",default="MMR.CLI.exe",
                     help="MMR command-line executable")   
 argParser.add_argument("--settings-only", dest="settingsOnly", action="store_true",
                     help="only generate settings; don't roll any seeds")
 argParser.add_argument("--version", dest="showVersion", action="store_true",
                     help="print version number and exit")
+argParser.add_argument("-fw", dest="fairyHuntChance",type=int,default=0,
+                    help="weight of fairy hunt seed")
+argParser.add_argument("-rw", dest="remainHuntChance",type=int,default=0,
+                    help="weight of remain hunt seed")
+argParser.add_argument("-tw", dest="totalChance",type=int,default=0,
+                    help="total weight of seed")
 args = argParser.parse_args()
 
 if (args.showVersion):
@@ -791,6 +841,11 @@ if (args.showVersion):
     sys.exit()
 
 optionSettingsFile = args.inputFile
+optionFairyFile = args.fairyFile
+optionRemainsFile = args.remainsFile
+optionFairyWeight = args.fairyHuntChance
+optionRemainsWeight = args.remainHuntChance
+optionTotalWeight = args.totalChance
 optionRandomizerExe = args.randomizerExe
 optionOutputCount = args.numberOfSettingsFiles
 optionDontMakeSeed = args.settingsOnly
@@ -800,14 +855,19 @@ if (len(sys.argv) == 1):
     if (guiResults[0]):
         sys.exit()
     optionSettingsFile = guiResults[1]
-    optionRandomizerExe = guiResults[2]
-    optionOutputCount = guiResults[3]
-    optionDontMakeSeed = guiResults[4]
+    optionFairyFile = guiResults[2]
+    optionRemainsFile = guiResults[3]
+    optionRandomizerExe = guiResults[4]
+    optionOutputCount = guiResults[8]
+    optionDontMakeSeed = guiResults[9]
+    optionFairyWeight = guiResults[5]
+    optionRemainsWeight = guiResults[6]
+    optionTotalWeight = guiResults[7]
 
 for i in range(optionOutputCount):
     resultFilename = ''
     while (resultFilename == ''):
-        resultFilename = GenerateMysterySettings(optionSettingsFile,(str)(i+1))
+        resultFilename = GenerateMysterySettings(optionSettingsFile, optionFairyFile, optionRemainsFile, optionFairyWeight, optionRemainsWeight, optionTotalWeight,(str)(i+1))
     if (optionDontMakeSeed == False):
         mmrcl = optionRandomizerExe + " -outputpatch -spoiler -settings " + resultFilename
         subprocess.call(mmrcl)
