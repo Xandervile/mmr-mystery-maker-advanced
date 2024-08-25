@@ -78,6 +78,14 @@ def openOptionsGui():
     enemyWeight_spinbox = ttk.Spinbox(weightframe, width=5, from_=0, to=100,textvariable=enemyWeight)
     enemyWeight_spinbox.grid(column=4, row=1, sticky=W)
 
+    adultWeight = StringVar(value="0")
+    adultWeight_spinbox = ttk.Spinbox(weightframe, width=5, from_=0, to=100,textvariable=adultWeight)
+    adultWeight_spinbox.grid(column=4, row=2, sticky=W)
+
+    trapNormalWeight = StringVar(value="0")
+    trapNormalWeight_spinbox = ttk.Spinbox(weightframe, width=5, from_=0, to=100,textvariable=trapNormalWeight)
+    trapNormalWeight_spinbox.grid(column=6, row=1, sticky=W)
+
     makeSettingsOnly = StringVar(value="0")
     makeSettingsOnly_checkbutton = ttk.Checkbutton(mainframe, text="Only make settings file", variable=makeSettingsOnly)
     makeSettingsOnly_checkbutton.grid(column=1, row=6, sticky=E)
@@ -97,6 +105,8 @@ def openOptionsGui():
     ttk.Label(mainframe, text="Custom path to MMR.CLI.exe:").grid(column=1, row=4, sticky=E)
     ttk.Label(mainframe, text="# of seeds:").grid(column=1, row=5, sticky=E)
     ttk.Label(weightframe, text="Weight for Enemy Shuffle:").grid(column=3, row=1, sticky=E)
+    ttk.Label(weightframe, text="Weight for Adult Model:").grid(column=3, row=2, sticky=E)
+    ttk.Label(weightframe, text="Weight for Traps (normal):").grid(column=5, row=1, sticky=E)
 
     for child in mainframe.winfo_children(): 
         child.grid_configure(padx=5, pady=5)
@@ -119,6 +129,8 @@ def openOptionsGui():
             (int)(baseChance.get()),
             (int)(numberToGenerate.get()),
             (int)(enemyWeight.get()),
+            (int)(adultWeight.get()),
+            (int)(trapNormalWeight.get()),
             (makeSettingsOnly.get() == "1")]
 
 def AddEntryToListString(liststring, word, value):
@@ -202,7 +214,7 @@ def FilenameOnly(pathstring):
     filename = filename[(filename.rfind("\\") + 1):]
     return filename
     
-def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairyWeight, remainWeight, baseWeight, enemyWeight, outputSuffix="output"):
+def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairyWeight, remainWeight, baseWeight, enemyWeight, adultWeight, trapNormalWeight, outputSuffix="output"):
 
     random.seed()
 
@@ -242,9 +254,16 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
         junkListString = AddStringToListString(junkListString,
                                                "--------------------------3fffffff-fffffffc----------")
 
+    catTrapEnabled = random.choices(["None", "Normal"], [100 - trapNormalWeight, trapNormalWeight])
+    settings["TrapAmount"] = catTrapEnabled[0]
+
     catEnemyShuffle = random.choices(["No change", "Shuffled"], [100 - enemyWeight, enemyWeight])
     if catEnemyShuffle[0] == "Shuffled":
         settings["RandomizeEnemies"] = True
+        
+    catAdultShuffle = random.choices(["Child", "Adult"], [100 - adultWeight, adultWeight])
+    if catAdultShuffle[0] == "Adult":
+        settings["Character"] = "AdultLink"
 
     catSongsanity = random.choices(["No change","Mix songs with items"],[65,35])
     if catSongsanity[0] == "Mix songs with items":
@@ -759,9 +778,7 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
     settings["CustomStartingItemListString"] = startListString
     settings["CustomJunkLocationsString"] = junkListString
 
-    outputFilename = inputFilename.removesuffix(".json")
-    outputFilename = outputFilename.removesuffix("base")
-    outputFilename = "output\\" + FilenameOnly(outputFilename) + outputSuffix + ".json" 
+    outputFilename = "output\\MysterySettings_" + outputSuffix + ".json" 
 
     try:
         os.makedirs("output")
@@ -772,7 +789,7 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
         json.dump(data,write_file,indent=4)
 
     spoilerlogFilename = outputFilename.removesuffix(".json")
-    spoilerlogFilename = spoilerlogFilename + "_MysterySpoiler.txt"
+    spoilerlogFilename = spoilerlogFilename + "_Spoiler.txt"
 
     with open(spoilerlogFilename, "w") as spoiler_file:
         print("MMR Mystery Maker", MYSTERY_MAKER_VERSION,"-- Mystery Spoiler Log",file=spoiler_file)
@@ -822,7 +839,12 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
         else:
             print("                Minigames: ", catMinigames[0],file=spoiler_file)
         print("        Bombers' Notebook: ", catBombersNotebook[0],file=spoiler_file)
-        print("            Enemy Shuffle: ", catEnemyShuffle[0],file=spoiler_file)
+        if enemyWeight > 0:
+            print("            Enemy Shuffle: ", catEnemyShuffle[0],file=spoiler_file)
+        if adultWeight > 0:
+            print("            Adult Shuffle: ", catAdultShuffle[0],file=spoiler_file)
+        if trapNormalWeight > 0: #When more, do sum here
+            print("              Trap Amount: ", catTrapEnabled[0],file=spoiler_file)
         print("---------------------------------------------",file=spoiler_file)
         print("  Gossip slots for always: ",gossipHintsTakenByAlways,file=spoiler_file)
         print("        Hard options used: ",hardOptions,file=spoiler_file)
@@ -853,6 +875,10 @@ argParser.add_argument("-bw", dest="baseChance",type=int,default=0,
                     help="weight of base settings")
 argParser.add_argument("-ew", dest="enemyWeight",type=int,default=0,
                     help="weight of enemy shuffle")
+argParser.add_argument("-a", dest="adultWeight",type=int,default=0,
+                    help="weight of adult model")
+argParser.add_argument("-nta", dest="trapNormalWeight",type=int,default=0,
+                    help="weight of normal trap amount")
 args = argParser.parse_args()
 
 if (args.showVersion):
@@ -869,6 +895,8 @@ optionRandomizerExe = args.randomizerExe
 optionOutputCount = args.numberOfSettingsFiles
 optionDontMakeSeed = args.settingsOnly
 optionEnemyWeight = args.enemyWeight
+optionAdultWeight = args.adultWeight
+optionTrapWeight = args.trapNormalWeight
 
 if (len(sys.argv) == 1):
     guiResults = openOptionsGui()
@@ -879,16 +907,18 @@ if (len(sys.argv) == 1):
     optionRemainsFile = guiResults[3]
     optionRandomizerExe = guiResults[4]
     optionOutputCount = guiResults[8]
-    optionDontMakeSeed = guiResults[10]
+    optionDontMakeSeed = guiResults[12]
     optionFairyWeight = guiResults[5]
     optionRemainsWeight = guiResults[6]
     optionBaseWeight = guiResults[7]
     optionEnemyWeight = guiResults[9]
+    optionAdultWeight = guiResults[10]
+    optionTrapWeight = guiResults[11]
 
 for i in range(optionOutputCount):
     resultFilename = ''
     while (resultFilename == ''):
-        resultFilename = GenerateMysterySettings(optionSettingsFile, optionFairyFile, optionRemainsFile, optionFairyWeight, optionRemainsWeight, optionBaseWeight, optionEnemyWeight,(str)(i+1))
+        resultFilename = GenerateMysterySettings(optionSettingsFile, optionFairyFile, optionRemainsFile, optionFairyWeight, optionRemainsWeight, optionBaseWeight, optionEnemyWeight, optionAdultWeight, optionTrapWeight, (str)(i+1))
     if (optionDontMakeSeed == False):
         mmrcl = optionRandomizerExe + " -outputpatch -spoiler -settings " + resultFilename
         subprocess.call(mmrcl)
