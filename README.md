@@ -1,6 +1,6 @@
-MMR Mystery Maker is a Python script (and now standalone .exe, thanks to [PyInstaller](https://pyinstaller.org/en/stable/index.html)) that generates semi-random "Mystery" settings files for [Majora's Mask Randomizer v1.16.0.12](https://github.com/ZoeyZolotova/mm-rando).
+MMR Mystery Maker is a Python script (and now standalone .exe, thanks to [PyInstaller](https://pyinstaller.org/en/stable/index.html) - to do for this version!) that generates semi-random "Mystery" settings files for [Majora's Mask Randomizer v1.16.0.12](https://github.com/ZoeyZolotova/mm-rando).
 
-See the [Mystery Settings Document](https://docs.google.com/document/d/1itr0_0H4xHFr2sKhuUdlBxwDGroJu5C74ZKuSIRFvYI/edit?usp=sharing) and the [Category Weights and Hints spreadsheet](https://docs.google.com/spreadsheets/d/14ZggIIteou_-D9oG-CnMEYK8u_s0_E6U5hIgqAkobrs/edit?usp=sharing) to learn more about Mystery settings.
+See the [Mystery Settings Document](https://docs.google.com/document/d/1itr0_0H4xHFr2sKhuUdlBxwDGroJu5C74ZKuSIRFvYI/edit?usp=sharing) and the [Category Weights and Hints spreadsheet](https://docs.google.com/spreadsheets/d/14ZggIIteou_-D9oG-CnMEYK8u_s0_E6U5hIgqAkobrs/edit?usp=sharing) to learn more about Mystery settings, courtesy of FifthWhammy!
 
 The original file by FifthWhammy had limitations that, due to it being an early version, I wanted to adapt on and make my own version, especially with the different Win Conditions being weighted, and it spiralled out of control from there.
 
