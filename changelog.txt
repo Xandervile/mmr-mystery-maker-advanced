@@ -1,3 +1,9 @@
+Advanced Settings release
+Major Changes:
+- Now uses external weights that you can easily edit!
+- Added weights for Gimmick options such as Damage Mode, Adult Link, even Clock Speed!
+- Added weights for the Win Condition Settings
+
 Mystery Maker / Default Settings release 3.0
 Major changes
 - MMR Mystery Maker is now available as a standalone executable! No Python or command line required!
