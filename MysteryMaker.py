@@ -285,7 +285,7 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
         settings["RandomizeEnemies"] = True
         
     catAdultShuffle = random.choices(settingsweights["Character"][0], settingsweights["Character"][1])
-    if catAdultShuffle[0] == "Adult":
+    if catAdultShuffle[0] == "AdultLink":
         settings["Character"] = "AdultLink"
 
     catGiantMaskAnywhere = random.choices(settingsweights["GiantMaskAnywhere"][0], settingsweights["GiantMaskAnywhere"][1])
