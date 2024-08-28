@@ -8,7 +8,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
 
-MYSTERY_MAKER_VERSION = "v3.0"
+MYSTERY_MAKER_VERSION = "v3.0 Adv."
 
 def openOptionsGui():
     def guiStartRandomize(*args):
@@ -27,6 +27,15 @@ def openOptionsGui():
     def browseForRemainsSettingsFile(*args):
         remainsSettingsFilePath.set(filedialog.askopenfilename())
 
+    def browseForBaseWeightsFile(*args):
+        baseWeightsFilePath.set(filedialog.askopenfilename())
+
+    def browseForFairyWeightsFile(*args):
+        fairyWeightsFilePath.set(filedialog.askopenfilename())
+
+    def browseForRemainsWeightsFile(*args):
+        remainsWeightsFilePath.set(filedialog.askopenfilename())
+
     def browseForCommandLineExe(*args):
         mmrCommandLineExePath.set(filedialog.askopenfilename())
 
@@ -35,8 +44,6 @@ def openOptionsGui():
 
     mainframe = ttk.Frame(guiWindow, padding="8 8 4 8")
     mainframe.grid(column=0, row=0, sticky=(N, W, E, S))
-    weightframe = ttk.Frame(guiWindow, padding="8 8 4 8")
-    weightframe.grid(column=0, row=1, sticky=(N, W, E, S))
     guiWindow.columnconfigure(0, weight=1)
     guiWindow.rowconfigure(0, weight=1)
 
@@ -44,74 +51,72 @@ def openOptionsGui():
 
     baseSettingsFilePath = StringVar(value="Default_Mystery_base.json")
     baseSettingsFilePath_entry = ttk.Entry(mainframe, width=70, textvariable=baseSettingsFilePath)
-    baseSettingsFilePath_entry.grid(column=2, row=1, sticky=(W, E))
+    baseSettingsFilePath_entry.grid(column=3, row=1, sticky=(W, E), columnspan=2)
 
     fairySettingsFilePath = StringVar(value="Mystery_Fairy_Hunt_base.json")
     fairySettingsFilePath_entry = ttk.Entry(mainframe, width=70, textvariable=fairySettingsFilePath)
-    fairySettingsFilePath_entry.grid(column=2, row=2, sticky=(W, E))
+    fairySettingsFilePath_entry.grid(column=3, row=3, sticky=(W, E), columnspan=2)
 
     remainsSettingsFilePath = StringVar(value="Mystery_Remains_Shuffle_base.json")
     remainsSettingsFilePath_entry = ttk.Entry(mainframe, width=70, textvariable=remainsSettingsFilePath)
-    remainsSettingsFilePath_entry.grid(column=2, row=3, sticky=(W, E))
+    remainsSettingsFilePath_entry.grid(column=3, row=5, sticky=(W, E), columnspan=2)
 	
     mmrCommandLineExePath = StringVar(value="MMR.CLI.exe")
     mmrCommandLineExePath_entry = ttk.Entry(mainframe, width=70, textvariable=mmrCommandLineExePath)
-    mmrCommandLineExePath_entry.grid(column=2, row=4, sticky=(W, E))
+    mmrCommandLineExePath_entry.grid(column=3, row=7, sticky=(W, E), columnspan=2)
 	
     fairyHuntChance = StringVar(value="10")
-    fairyHuntChance_spinbox = ttk.Spinbox(weightframe, width=5, from_=0, to=100000,textvariable=fairyHuntChance)
-    fairyHuntChance_spinbox.grid(column=2, row=2, sticky=W)
+    fairyHuntChance_spinbox = ttk.Spinbox(mainframe, width=5, from_=0, to=100000,textvariable=fairyHuntChance)
+    fairyHuntChance_spinbox.grid(column=2, row=4, sticky=E)
 	
     remainHuntChance = StringVar(value="15")
-    remainHuntChance_spinbox = ttk.Spinbox(weightframe, width=5, from_=0, to=100000,textvariable=remainHuntChance)
-    remainHuntChance_spinbox.grid(column=2, row=3, sticky=W)
+    remainHuntChance_spinbox = ttk.Spinbox(mainframe, width=5, from_=0, to=100000,textvariable=remainHuntChance)
+    remainHuntChance_spinbox.grid(column=2, row=6, sticky=E)
 
     baseChance = StringVar(value="75")
-    baseChance_spinbox = ttk.Spinbox(weightframe, width=5, from_=1, to=100000,textvariable=baseChance)
-    baseChance_spinbox.grid(column=2, row=1, sticky=W)
+    baseChance_spinbox = ttk.Spinbox(mainframe, width=5, from_=1, to=100000,textvariable=baseChance)
+    baseChance_spinbox.grid(column=2, row=2, sticky=E)
+
+    baseWeightsFilePath = StringVar(value="Default_Mystery_Weights.json")
+    baseWeightsFilePath_entry = ttk.Entry(mainframe, width=70, textvariable=baseWeightsFilePath)
+    baseWeightsFilePath_entry.grid(column=3, row=2, sticky=(W, E), columnspan=2)
+
+    fairyWeightsFilePath = StringVar(value="Mystery_Fairy_Hunt_Weights.json")
+    fairyWeightsFilePath_entry = ttk.Entry(mainframe, width=70, textvariable=fairyWeightsFilePath)
+    fairyWeightsFilePath_entry.grid(column=3, row=4, sticky=(W, E), columnspan=2)
+
+    remainsWeightsFilePath = StringVar(value="Mystery_Remains_Shuffle_Weights.json")
+    remainsWeightsFilePath_entry = ttk.Entry(mainframe, width=70, textvariable=remainsWeightsFilePath)
+    remainsWeightsFilePath_entry.grid(column=3, row=6, sticky=(W, E), columnspan=2)
 
     numberToGenerate = StringVar(value="1")
     numberToGenerate_spinbox = ttk.Spinbox(mainframe, width=5, from_=1, to=100,textvariable=numberToGenerate)
-    numberToGenerate_spinbox.grid(column=2, row=5, sticky=W)
-
-    enemyWeight = StringVar(value="0")
-    enemyWeight_spinbox = ttk.Spinbox(weightframe, width=5, from_=0, to=100,textvariable=enemyWeight)
-    enemyWeight_spinbox.grid(column=4, row=1, sticky=W)
-
-    adultWeight = StringVar(value="0")
-    adultWeight_spinbox = ttk.Spinbox(weightframe, width=5, from_=0, to=100,textvariable=adultWeight)
-    adultWeight_spinbox.grid(column=4, row=2, sticky=W)
-
-    trapNormalWeight = StringVar(value="0")
-    trapNormalWeight_spinbox = ttk.Spinbox(weightframe, width=5, from_=0, to=100,textvariable=trapNormalWeight)
-    trapNormalWeight_spinbox.grid(column=6, row=1, sticky=W)
+    numberToGenerate_spinbox.grid(column=4, row=8, sticky=W)
 
     makeSettingsOnly = StringVar(value="0")
     makeSettingsOnly_checkbutton = ttk.Checkbutton(mainframe, text="Only make settings file", variable=makeSettingsOnly)
-    makeSettingsOnly_checkbutton.grid(column=1, row=6, sticky=E)
+    makeSettingsOnly_checkbutton.grid(column=1, row=8, sticky=E)
 
-    ttk.Button(mainframe, text="Browse...", command=browseForBaseSettingsFile).grid(column=3, row=1, sticky=W)
-    ttk.Button(mainframe, text="Browse...", command=browseForFairySettingsFile).grid(column=3, row=2, sticky=W)
-    ttk.Button(mainframe, text="Browse...", command=browseForRemainsSettingsFile).grid(column=3, row=3, sticky=W)
-    ttk.Button(mainframe, text="Browse...", command=browseForCommandLineExe).grid(column=3, row=4, sticky=W)
-    ttk.Button(mainframe, text="Randomize", command=guiStartRandomize).grid(column=3, row=6, sticky=W)
+    ttk.Label(mainframe, text="Custom base MMR settings file:").grid(column=1, row=1, sticky=E,columnspan = 2)
+    ttk.Label(mainframe, text="Custom fairy hunt MMR settings file:").grid(column=1, row=3, sticky=E, columnspan = 2)
+    ttk.Label(mainframe, text="Custom remains hunt MMR settings file:").grid(column=1, row=5, sticky=E, columnspan = 2)
+    ttk.Button(mainframe, text="Browse...", command=browseForBaseSettingsFile).grid(column=5, row=1, sticky=W)
+    ttk.Button(mainframe, text="Browse...", command=browseForFairySettingsFile).grid(column=5, row=3, sticky=W)
+    ttk.Button(mainframe, text="Browse...", command=browseForRemainsSettingsFile).grid(column=5, row=5, sticky=W)
+    ttk.Button(mainframe, text="Browse...", command=browseForCommandLineExe).grid(column=5, row=7, sticky=W)
+    ttk.Button(mainframe, text="Randomize", command=guiStartRandomize).grid(column=5, row=8, sticky=W)
+    ttk.Label(mainframe, text="Custom path to MMR.CLI.exe:").grid(column=1, row=7, sticky=E, columnspan = 2)
+    ttk.Label(mainframe, text="# of seeds:").grid(column=3, row=8, sticky=E)
 
-    ttk.Label(mainframe, text="Custom base MMR settings file:").grid(column=1, row=1, sticky=E)
-    ttk.Label(mainframe, text="Custom fairy hunt MMR settings file:").grid(column=1, row=2, sticky=E)
-    ttk.Label(mainframe, text="Custom remains hunt MMR settings file:").grid(column=1, row=3, sticky=E)
-    ttk.Label(weightframe, text="Weight of Fairy Hunt:").grid(column=1, row=2, sticky=E)
-    ttk.Label(weightframe, text="Weight of Remain Hunt:").grid(column=1, row=3, sticky=E)
-    ttk.Label(weightframe, text="Weight of Base Settings:").grid(column=1, row=1, sticky=E)
-    ttk.Label(mainframe, text="Custom path to MMR.CLI.exe:").grid(column=1, row=4, sticky=E)
-    ttk.Label(mainframe, text="# of seeds:").grid(column=1, row=5, sticky=E)
-    ttk.Label(weightframe, text="Weight for Enemy Shuffle:").grid(column=3, row=1, sticky=E)
-    ttk.Label(weightframe, text="Weight for Adult Model:").grid(column=3, row=2, sticky=E)
-    ttk.Label(weightframe, text="Weight for Traps (normal):").grid(column=5, row=1, sticky=E)
+    ttk.Label(mainframe, text="Weight of Fairy Hunt:").grid(column=1, row=4, sticky=E)
+    ttk.Label(mainframe, text="Weight of Remain Hunt:").grid(column=1, row=6, sticky=E)
+    ttk.Label(mainframe, text="Weight of Base Settings:").grid(column=1, row=2, sticky=E)
+    ttk.Button(mainframe, text="Browse...", command=browseForBaseWeightsFile).grid(column=5, row=2, sticky=W)
+    ttk.Button(mainframe, text="Browse...", command=browseForFairyWeightsFile).grid(column=5, row=4, sticky=W)
+    ttk.Button(mainframe, text="Browse...", command=browseForRemainsWeightsFile).grid(column=5, row=6, sticky=W)
+
 
     for child in mainframe.winfo_children(): 
-        child.grid_configure(padx=5, pady=5)
-
-    for child in weightframe.winfo_children(): 
         child.grid_configure(padx=5, pady=5)
 
     baseSettingsFilePath_entry.focus()
@@ -128,9 +133,9 @@ def openOptionsGui():
             (int)(remainHuntChance.get()),
             (int)(baseChance.get()),
             (int)(numberToGenerate.get()),
-            (int)(enemyWeight.get()),
-            (int)(adultWeight.get()),
-            (int)(trapNormalWeight.get()),
+            baseWeightsFilePath.get(),
+            fairyWeightsFilePath.get(),
+            remainsWeightsFilePath.get(),
             (makeSettingsOnly.get() == "1")]
 
 def AddEntryToListString(liststring, word, value):
@@ -214,11 +219,20 @@ def FilenameOnly(pathstring):
     filename = filename[(filename.rfind("\\") + 1):]
     return filename
     
-def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairyWeight, remainWeight, baseWeight, enemyWeight, adultWeight, trapNormalWeight, outputSuffix="output"):
+def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairyWeight, remainWeight, baseWeight, baseWeightfile, fairyWeightfile, remainsWeightfile, outputSuffix="output"):
 
     random.seed()
 
     randomFilename = random.choices([fairyFilename, remainsFilename, inputFilename], [fairyWeight, remainWeight, baseWeight])
+
+    if randomFilename[0] == fairyFilename:
+        weightFilename = fairyWeightfile
+    elif randomFilename[0] == remainsFilename:
+        weightFilename = remainsWeightfile
+    else:
+        weightFilename = baseWeightfile
+
+
 
     with open(randomFilename[0], "r") as read_file:
         data = json.load(read_file)
@@ -227,6 +241,12 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
     itemListString = settings["CustomItemListString"]
     startListString = settings["CustomStartingItemListString"]
     junkListString = settings["CustomJunkLocationsString"]
+
+
+    with open(weightFilename, "r") as read_file:
+        weights = json.load(read_file)
+
+    settingsweights = weights["GameplaySettings"]
 
     remainsShuffleActive = False
     fairyHuntActive = False
@@ -242,11 +262,11 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
     GOSSIP_HINTS_LIMIT = 12  # intentionally two less than the 14 gossip slots available
 
     nonzeroCategories = 0
-    NONZERO_CATEGORIES_MINIMUM = 5
+    NONZERO_CATEGORIES_MINIMUM = settingsweights["MinimumNonZeroCategories"]
 
     hardOptions = 0
-    hardOptionLimitBonus = False
-    HARD_OPTIONS_LIMIT = 2
+    hardOptionLimitBonus = settingsweights["HardOptionLimitBonus"]
+    HARD_OPTIONS_LIMIT = settingsweights["HardOptionsLimit"]
 
     if (fairyHuntActive == True):
         itemListString = AddStringToListString(itemListString,
@@ -254,18 +274,60 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
         junkListString = AddStringToListString(junkListString,
                                                "--------------------------3fffffff-fffffffc----------")
 
-    catTrapEnabled = random.choices(["None", "Normal"], [100 - trapNormalWeight, trapNormalWeight])
+    catTrapEnabled = random.choices(settingsweights["TrapAmount"][0], settingsweights["TrapAmount"][1])
     settings["TrapAmount"] = catTrapEnabled[0]
+    if catTrapEnabled[0] != "None":
+        settings["TrapQuirks"] = True
+        settings["TrapWeights"] = settingsweights["TrapWeights"]
 
-    catEnemyShuffle = random.choices(["No change", "Shuffled"], [100 - enemyWeight, enemyWeight])
+    catEnemyShuffle = random.choices(settingsweights["RandomizeEnemies"][0], settingsweights["RandomizeEnemies"][1])
     if catEnemyShuffle[0] == "Shuffled":
         settings["RandomizeEnemies"] = True
         
-    catAdultShuffle = random.choices(["Child", "Adult"], [100 - adultWeight, adultWeight])
+    catAdultShuffle = random.choices(settingsweights["Character"][0], settingsweights["Character"][1])
     if catAdultShuffle[0] == "Adult":
         settings["Character"] = "AdultLink"
 
-    catSongsanity = random.choices(["No change","Mix songs with items"],[65,35])
+    catGiantMaskAnywhere = random.choices(settingsweights["GiantMaskAnywhere"][0], settingsweights["GiantMaskAnywhere"][1])
+    if catGiantMaskAnywhere[0] == "Active":
+        settings["GiantMaskAnywhere"] = True
+
+    catIronGoron = random.choices(settingsweights["IronGoron"][0], settingsweights["IronGoron"][1])
+    if catIronGoron[0] == "Enabled":
+        settings["IronGoron"] = True
+
+    catClimbSurfaces = random.choices(settingsweights["ClimbMostSurfaces"][0], settingsweights["ClimbMostSurfaces"][1])
+    if catClimbSurfaces[0] == "Enabled":
+        settings["ClimbMostSurfaces"] = True
+
+    catDekuHopping = random.choices(settingsweights["ContinuousDekuHopping"][0], settingsweights["ContinuousDekuHopping"][1])
+    if catDekuHopping[0] == "Enabled":
+        settings["ContinuousDekuHopping"] = True
+
+    catHookshotAnySurface = random.choices(settingsweights["HookshotAnySurface"][0], settingsweights["HookshotAnySurface"][1])
+    if catHookshotAnySurface[0] == "Enabled":
+        settings["HookshotAnySurface"] = True
+
+    catSunsSongEnabled = random.choices(settingsweights["EnableSunsSong"][0], settingsweights["EnableSunsSong"][1])
+    if catSunsSongEnabled[0] == "Enabled":
+        settings["EnableSunsSong"] = True
+
+    catDamageEffect = random.choices(settingsweights["DamageEffect"][0], settingsweights["DamageEffect"][1])
+    settings["DamageEffect"] = catDamageEffect[0]
+
+    catDamageMode = random.choices(settingsweights["DamageMode"][0], settingsweights["DamageMode"][1])
+    settings["DamageMode"] = catDamageMode[0]
+
+    catMovementMode = random.choices(settingsweights["MovementMode"][0], settingsweights["MovementMode"][1])
+    settings["MovementMode"] = catMovementMode[0]
+
+    catFloorType = random.choices(settingsweights["FloorType"][0], settingsweights["FloorType"][1])
+    settings["FloorType"] = catFloorType[0]
+
+    catClockSpeed = random.choices(settingsweights["ClockSpeed"][0], settingsweights["ClockSpeed"][1])
+    settings["ClockSpeed"] = catClockSpeed[0]
+
+    catSongsanity = random.choices(settingsweights["AddSongs"][0],settingsweights["AddSongs"][1])
     if catSongsanity[0] == "Mix songs with items":
         settings["AddSongs"] = True
         itemListString = RemoveEntryFromListString(itemListString,3,"1")
@@ -274,35 +336,19 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
         gossipHintsTakenByAlways += 1
         nonzeroCategories += 1
 
-    wgtsStartingBossRemains = [70,25,10]
-    if (remainsShuffleActive or fairyHuntActive):
-        wgtsStartingBossRemains = [100,0,0]
-    catStartingBossRemains = random.choices(["No change","One","Two"], wgtsStartingBossRemains)
+    catStartingBossRemains = random.choices(settingsweights["StartingBossRemains"][0], settingsweights["StartingBossRemains"][1])
     if catStartingBossRemains[0] == "One" and fairyHuntActive == False:
         settings["BossRemainsMode"] = "Blitz1"
     if catStartingBossRemains[0] == "Two" and fairyHuntActive == False:
         settings["BossRemainsMode"] = "Blitz2"
 
-    catStartingSwordShield = random.choices(["No change","Shuffled"],[75,25])
+    catStartingSwordShield = random.choices(settingsweights["StartingSwordShield"][0],settingsweights["StartingSwordShield"][1])
     if catStartingSwordShield[0] == "Shuffled":
         itemListString = AddEntryToListString(itemListString,7,"4000000")
         itemListString = AddEntryToListString(itemListString,7,"2000000")
 
-    catStartingRandomItem = random.choices(["No change",
-                                            "Deku Mask",
-                                            "Goron Mask",
-                                            "Zora Mask",
-                                            "Fierce Deity's Mask",
-                                            "Bow",
-                                            "Hookshot",
-                                            "Bomb Bag",
-                                            "Blast Mask",
-                                            "Adult's Wallet",
-                                            "Empty Bottle (Dampe's)",
-                                            "Bunny Hood",
-                                            "Great Fairy's Sword",
-                                            "Magic"],
-                                           [0,10,10,10,10,10,10,5,5,10,10,5,5,0])
+    catStartingRandomItem = random.choices(settingsweights["StartingRandomItems"][0],
+                                           settingsweights["StartingRandomItems"][1])
     if catStartingRandomItem[0] == "Deku Mask":
         startListString = AddEntryToListString(startListString,0,"1")
     if catStartingRandomItem[0] == "Goron Mask":
@@ -331,18 +377,10 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
         startListString = AddEntryToListString(startListString,1,"100")
 
 
-    wgtsStartingRandomSong = [0,40,10,10,10,10,10,10,0]
+    wgtsStartingRandomSong = settingsweights["StartingRandomSong"][1]
     if catSongsanity[0] != "No change":
         wgtsStartingRandomSong[0] = 0
-    catStartingRandomSong = random.choices(["No change",
-                                            "Epona's Song",
-                                            "Song of Healing",
-                                            "Song of Storms",
-                                            "Sonata of Awakening",
-                                            "Goron Lullaby",
-                                            "New Wave Bossa Nova",
-                                            "Elegy of Emptiness",
-                                            "Oath to Order"],
+    catStartingRandomSong = random.choices(settingsweights["StartingRandomSong"][0],
                                            wgtsStartingRandomSong)
     if catStartingRandomSong[0] != "No change":
         if catSongsanity[0] == "No change":
@@ -364,26 +402,24 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
     if catStartingRandomSong[0] == "Oath to Order":
         startListString = AddEntryToListString(startListString,2,"2")
 
-    wgtsFierceDeityAnywhere = [55,45]
+    wgtsFierceDeityAnywhere = settingsweights["AllowFierceDeityAnywhere"][1]
     if catStartingRandomItem[0] == "Fierce Deity's Mask":
         wgtsFierceDeityAnywhere = [0,100]
-    catFierceDeityAnywhere = random.choices(["No change","Active"], wgtsFierceDeityAnywhere)
+    catFierceDeityAnywhere = random.choices(settingsweights["AllowFierceDeityAnywhere"][0], wgtsFierceDeityAnywhere)
     if catFierceDeityAnywhere[0] == "Active":
         settings["AllowFierceDeityAnywhere"] = True
 
-    wgtsShopsanityPrices = [70,20,10]
-    catShopsanityChecks = random.choices(["No change",
-                                          "Late Shopsanity",
-                                          "Full Shopsanity"],
-                                         [60,20,20])
+    wgtsShopsanityPrices = settingsweights["NoShopsanityPriceShuffle"][1]
+    catShopsanityChecks = random.choices(settingsweights["Shopsanity"][0],
+                                         settingsweights["Shopsanity"][1])
     if catShopsanityChecks[0] == "Late Shopsanity":
         itemListString = AddStringToListString(itemListString,
                                                "-------------------------3--------3f000----")
-        wgtsShopsanityPrices = [50,35,15]
+        wgtsShopsanityPrices = settingsweights["LateShopsanityPriceShuffle"][1]
     if catShopsanityChecks[0] == "Full Shopsanity":
         itemListString = AddStringToListString(itemListString,
                                                "-------------------------b03--------3ffff-80000000---")
-        wgtsShopsanityPrices = [10,65,25]
+        wgtsShopsanityPrices = settingsweights["FullShopsanityPriceShuffle"][1]
 
     catShopsanityPrices = random.choices(["No change",
                                           "Shuffle purchase prices",
@@ -400,24 +436,22 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
     if catShopsanityChecks[0] != "No change" or catShopsanityPrices[0] != "No change":
         nonzeroCategories += 1
 
-    catSoilsanity = random.choices(["No change","Shuffled"],[70,30])
+    catSoilsanity = random.choices(settingsweights["Soilsanity"][0],settingsweights["Soilsanity"][1])
     if catSoilsanity[0] == "Shuffled":
         itemListString = AddStringToListString(itemListString,
                                                "-----------7ff-f0000000-------------------------")
         settings["OverrideHintPriorities"][2].append("CollectableRomaniRanchSoftSoil1")
         nonzeroCategories += 1
 
-    catCowsanity = random.choices(["No change","Shuffled"],[70,30])
+    catCowsanity = random.choices(settingsweights["Cowsanity"][0],settingsweights["Cowsanity"][1])
     if catCowsanity[0] == "Shuffled":
         itemListString = AddStringToListString(itemListString,
                                                "-----------------------------1f-e0000000-------")
         settings["OverrideHintPriorities"][1].append("ItemWellCowMilk")
         nonzeroCategories += 1
 
-    wgtsStrayFairies = [0,70,30]
-    catStrayFairies = random.choices(["No change",
-                                      "Most chest fairies + CT",
-                                      "All stray fairies"],
+    wgtsStrayFairies = settingsweights["StrayFairysanity"][1]
+    catStrayFairies = random.choices(settingsweights["StrayFairysanity"][0],
                                      wgtsStrayFairies)
     if catStrayFairies[0] == "Most chest fairies + CT":
         if (wgtsStrayFairies[0] > 0):
@@ -442,29 +476,21 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
             junkListString = RemoveStringFromListString(junkListString,
                                                         "--------------------------3fffffff-fffffffc----------")
 
-    wgtsEntrancesTemples = [55,45]
-    wgtsEntrancesBossRooms = [70,30]
-    catEntrancesTemples = random.choices(["No change","Shuffled"], wgtsEntrancesTemples)
+    catEntrancesTemples = random.choices(settingsweights["RandomizeDungeonEntrances"][0], settingsweights["RandomizeDungeonEntrances"][1])
     if catEntrancesTemples[0] == "Shuffled":
         settings["RandomizeDungeonEntrances"] = True
-    catEntrancesBossRooms = random.choices(["No change","Shuffled"], wgtsEntrancesBossRooms)
+    catEntrancesBossRooms = random.choices(settingsweights["RandomizeBossRooms"][0], settingsweights["RandomizeBossRooms"][1])
     if catEntrancesBossRooms[0] == "Shuffled":
         settings["RandomizeBossRooms"] = True
 
     if catEntrancesTemples[0] != "No change" or catEntrancesBossRooms[0] != "No change":
         nonzeroCategories += 1
 
-    wgtsKeysanityBossKeys = [50,30,20,0,0]
-    if (fairyHuntActive == True):
-        wgtsKeysanityBossKeys = [100,0,0,0,0]
+    wgtsKeysanityBossKeys = settingsweights["BossKeyMode"][1]
     if hardOptions >= HARD_OPTIONS_LIMIT:
         wgtsKeysanityBossKeys[1] += wgtsKeysanityBossKeys[2]
         wgtsKeysanityBossKeys[2] = 0
-    catKeysanityBossKeys = random.choices(["No change",
-                                           "Shuffled within their temple",
-                                           "Shuffled within any temple",
-                                           "Shuffled within area",
-                                           "Shuffled anywhere"],
+    catKeysanityBossKeys = random.choices(settingsweights["BossKeyMode"][0],
                                           wgtsKeysanityBossKeys)
     if catKeysanityBossKeys[0] == "Shuffled within their temple":
         settings["BossKeyMode"] = "KeepWithinArea, KeepWithinTemples, KeepThroughTime"
@@ -478,12 +504,7 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
         settings["OverrideNumberOfRequiredGossipHints"] += 1
         gossipHintsTakenByAlways += 1
 
-    catKeysanitySmallKeys = random.choices(["No change",
-                                            "Shuffled within their temple",
-                                            "Shuffled within any temple",
-                                            "Shuffled within area",
-                                            "Shuffled anywhere"],
-                                           [60,20,20,0,0])
+    catKeysanitySmallKeys = random.choices(settingsweights["SmallKeyMode"][0], settingsweights["SmallKeyMode"][1])
     if catKeysanitySmallKeys[0] == "Shuffled within their temple":
         settings["SmallKeyMode"] = "KeepWithinArea, KeepWithinTemples, KeepThroughTime"
     if catKeysanitySmallKeys[0] == "Shuffled within any temple":
@@ -498,15 +519,15 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
     if catKeysanityBossKeys[0] != "No change" or catKeysanitySmallKeys[0] != "No change":
         nonzeroCategories += 1
 
-    catScoopsanity = random.choices(["No change","Shuffled with scoops"],
-                                       [75,25])
+    catScoopsanity = random.choices(settingsweights["Scoopsanity"][0],
+                                       settingsweights["Scoopsanity"][1])
     if catScoopsanity[0] == "Shuffled with scoops":
         itemListString = AddStringToListString(itemListString,
                                                "---------------------------------fdc0000----")
         settings["OverrideHintPriorities"][1].append("BottleCatchBigPoe")
         nonzeroCategories += 1
 
-    catHitSpots = random.choices(["No change", "One Rupee each", "All Rupees"], [70,25,5])
+    catHitSpots = random.choices(settingsweights["HitSpotShuffle"][0], settingsweights["HitSpotShuffle"][1])
     if catHitSpots[0] == "One Rupee each":
         itemListString = AddStringToListString(itemListString,
                                                "-------924924-92492492-49240000---8000000-------------------------")
@@ -516,10 +537,10 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
     if catHitSpots[0] != "No change":
         nonzeroCategories += 1
 
-    catTokensanity = random.choices(["No change","One house","Both houses"], [80,15,5])
+    catTokensanity = random.choices(settingsweights["Tokensanity"][0], settingsweights["Tokensanity"][1])
     catTokensanityHouse = ["No change"]
     if catTokensanity[0] == "One house":
-        catTokensanityHouse = random.choices(["SSH","OSH"],[1,1])
+        catTokensanityHouse = random.choices(settingsweights["TokenHouse"][0],settingsweights["TokenHouse"][1])
         if catTokensanityHouse[0] == "SSH":
             itemListString = AddStringToListString(itemListString,
                                                "----------------------------7-ffffffe0--------")
@@ -532,25 +553,25 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
     if catTokensanity[0] != "No change":
         nonzeroCategories += 1
 
-    catCratesAndBarrels = random.choices(["No change","Shuffled"], [70,30])
+    catCratesAndBarrels = random.choices(settingsweights["CratesandBarrelsShuffle"][0], settingsweights["CratesandBarrelsShuffle"][1])
     if catCratesAndBarrels[0] == "Shuffled":
         itemListString = AddStringToListString(itemListString,
                                                "---------------c0000-2000--3c200--30--1f078-8000008-10000100-20000000------------")
         nonzeroCategories += 1
 
-    catKeatonGrass = random.choices(["No change","Shuffled"], [75,25])
+    catKeatonGrass = random.choices(settingsweights["KeatonGrassShuffle"][0], settingsweights["KeatonGrassShuffle"][1])
     if catKeatonGrass[0] == "Shuffled":
         itemListString = AddStringToListString(itemListString,
                                                "-----1f-fffffc00-------------------------------")
         nonzeroCategories += 1
 
-    catGossipFairies = random.choices(["No change","Shuffled"], [100,0])
+    catGossipFairies = random.choices(settingsweights["GossipFairyShuffle"][0], settingsweights["GossipFairyShuffle"][1])
     if catGossipFairies[0] == "Shuffled":
         itemListString = AddStringToListString(itemListString,
                                                "-100000-ffffff00-----------------------------------")
         nonzeroCategories += 1
 
-    catButterflyAndWellFairies = random.choices(["No change","Shuffled"], [75,25])
+    catButterflyAndWellFairies = random.choices(settingsweights["ButterflyFairyShuffle"][0], settingsweights["ButterflyFairyShuffle"][1])
     if catButterflyAndWellFairies[0] == "Shuffled":
         itemListString = AddStringToListString(itemListString,
                                                "1fe-1fe00000------------------------------------")
@@ -558,14 +579,10 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
             settings["OverrideHintPriorities"][2].remove("ChestWellLeftPurpleRupee")
         nonzeroCategories += 1
 
-    wgtsLongQuests = [35,20,15,30,0]
+    wgtsLongQuests = settingsweights["LongQuestShuffle"][1]
     if hardOptions >= HARD_OPTIONS_LIMIT:
         wgtsLongQuests[4] = 0    
-    catLongQuests = random.choices(["No change",
-                                    "Anju and Kafei",
-                                    "Baby Zoras",
-                                    "Frog Choir",
-                                    "All Long Quests"],
+    catLongQuests = random.choices(settingsweights["LongQuestShuffle"][0],
                                    wgtsLongQuests)
     if catLongQuests[0] == "Anju and Kafei" or catLongQuests[0] == "All Long Quests":
         junkListString = RemoveEntryFromListString(junkListString,2,"400000")
@@ -589,10 +606,10 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
     if catLongQuests[0] != "No change":
         nonzeroCategories += 1
 
-    wgtsFrogs = [65,35]
+    wgtsFrogs = settingsweights["FrogShuffle"][1]
     if hardOptions >= HARD_OPTIONS_LIMIT and (catLongQuests[0] == "Frog Choir" or catLongQuests[0] == "All Long Quests"):
         wgtsFrogs = [100,0]
-    catFrogs = random.choices(["No change","Shuffled"], wgtsFrogs)
+    catFrogs = random.choices(settingsweights["FrogShuffle"][0], wgtsFrogs)
     if catFrogs[0] == "Shuffled":
         itemListString = AddStringToListString(itemListString,
                                                "1-e0000000------------------------------------")
@@ -602,15 +619,11 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
             hardOptions += 1
         nonzeroCategories += 1
 
-    wgtsLooseRupees = [60,10,10,10,10]
+    wgtsLooseRupees = settingsweights["LooseRupeeShuffle"][1]
     if hardOptions >= HARD_OPTIONS_LIMIT:
         wgtsLooseRupees[3] += wgtsLooseRupees[4]
         wgtsLooseRupees[4] = 0
-    catLooseRupees = random.choices(["No change",
-                                     "Temple Red only",
-                                     "All Red",
-                                     "All Red and Blue",
-                                     "All Red, Blue, and Green"],
+    catLooseRupees = random.choices(settingsweights["LooseRupeeShuffle"][0],
                                     wgtsLooseRupees)
     if catLooseRupees[0] == "Temple Red only":
         itemListString = AddStringToListString(itemListString,
@@ -630,11 +643,11 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
     if catLooseRupees[0] != "No change":
         nonzeroCategories += 1
 
-    wgtsSnowsanity = [85,15,0]
+    wgtsSnowsanity = settingsweights["Snowsanity"][1]
     if hardOptions >= HARD_OPTIONS_LIMIT:
         wgtsSnowsanity[1] += wgtsSnowsanity[2]
         wgtsSnowsanity[2] = 0
-    catSnowsanity = random.choices(["No change","Any-day snowballs","All shuffled"], wgtsSnowsanity)
+    catSnowsanity = random.choices(settingsweights["Snowsanity"][0], wgtsSnowsanity)
     if catSnowsanity[0] == "Any-day snowballs":
         itemListString = AddStringToListString(itemListString,
                                                "-----1fc00--------fc0ff00-cf800--c0000----180c006--e00-1c0000-c0000c-------------")
@@ -645,13 +658,11 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
     if catSnowsanity[0] != "No change":
         nonzeroCategories += 1
 
-    wgtsPotsanity = [80,10,10]
+    wgtsPotsanity = settingsweights["Potsanity"][1]
     if hardOptions >= HARD_OPTIONS_LIMIT:
         wgtsPotsanity[1] += wgtsPotsanity[2]
         wgtsPotsanity[2] = 0
-    catPotsanity = random.choices(["No change",
-                                   "Temples and side dungeons",
-                                   "All but fairies/owls shuffled"],
+    catPotsanity = random.choices(settingsweights["Potsanity"][0],
                                   wgtsPotsanity)
     if catPotsanity[0] == "Temples and side dungeons":
         itemListString = AddStringToListString(itemListString,
@@ -669,11 +680,11 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
             settings["OverrideHintPriorities"][2].remove("ChestWellLeftPurpleRupee")
         nonzeroCategories += 1
 
-    wgtsPhotosSales = [75,25]
+    wgtsPhotosSales = settingsweights["MundaneShuffle"][1]
     if gossipHintsTakenByAlways >= GOSSIP_HINTS_LIMIT:
         wgtsPhotosSales[0] += wgtsPhotosSales[1]
         wgtsPhotosSales[1] = 0
-    catPhotosSales = random.choices(["No change", "Shuffled"], wgtsPhotosSales)
+    catPhotosSales = random.choices(settingsweights["MundaneShuffle"][0], wgtsPhotosSales)
     if catPhotosSales[0] == "Shuffled":
         itemListString = AddStringToListString(itemListString,
                                                "-----60000--------------------f8c070------------")
@@ -682,16 +693,14 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
         gossipHintsTakenByAlways += 1
         nonzeroCategories += 1
 
-    wgtsMinigames = [80,20,0]
+    wgtsMinigames = settingsweights["ExtraMiniGameShuffle"][1]
     if hardOptions >= HARD_OPTIONS_LIMIT or (gossipHintsTakenByAlways + 3) > GOSSIP_HINTS_LIMIT:
         wgtsMinigames[1] += wgtsMinigames[2]
         wgtsMinigames[2] = 0
     if gossipHintsTakenByAlways >= GOSSIP_HINTS_LIMIT:
         wgtsMinigames[0] += wgtsMinigames[1]
         wgtsMinigames[1] = 0
-    catMinigames = random.choices(["No change",
-                                    "Swamp 2 + Full TCG + Extra",
-                                    "All shuffled"],
+    catMinigames = random.choices(settingsweights["ExtraMiniGameShuffle"][0],
                                    wgtsMinigames)
     catMinigamesExtra = ["No change"]
     if catMinigames[0] == "Swamp 2 + Full TCG + Extra":
@@ -719,13 +728,11 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
     if catMinigames[0] != "No change":
         nonzeroCategories += 1
         
-    wgtsBombersNotebook = [80,10,10]
+    wgtsBombersNotebook = settingsweights["NotebookShuffle"][1]
     if hardOptions >= HARD_OPTIONS_LIMIT or gossipHintsTakenByAlways >= GOSSIP_HINTS_LIMIT:
         wgtsBombersNotebook[1] += wgtsBombersNotebook[2]
         wgtsBombersNotebook[2] = 0
-    catBombersNotebook = random.choices(["No change",
-                                         "Meetings only",
-                                         "All shuffled"],
+    catBombersNotebook = random.choices(settingsweights["NotebookShuffle"][0],
                                         wgtsBombersNotebook)
     if catBombersNotebook[0] == "Meetings only":
         startListString = AddEntryToListString(startListString,0,"400000")
@@ -794,6 +801,7 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
     with open(spoilerlogFilename, "w") as spoiler_file:
         print("MMR Mystery Maker", MYSTERY_MAKER_VERSION,"-- Mystery Spoiler Log",file=spoiler_file)
         print("Base settings: ", FilenameOnly(randomFilename[0]),file=spoiler_file)
+        print("  Weight file: ", FilenameOnly(weightFilename),file=spoiler_file)
         print("  Output file: ", outputFilename,file=spoiler_file)
         print("=============================================",file=spoiler_file)
         if (remainsShuffleActive == True):
@@ -808,6 +816,32 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
         print("     Starting Random Item: ", catStartingRandomItem[0],file=spoiler_file)
         print("     Starting Random Song: ", catStartingRandomSong[0],file=spoiler_file)
         print("    Fierce Deity Anywhere: ", catFierceDeityAnywhere[0],file=spoiler_file)
+        if settingsweights["GiantMaskAnywhere"][1][0] > 0:
+            print("      Giant Mask Anywhere: ", catGiantMaskAnywhere[0],file=spoiler_file)
+        if settingsweights["EnableSunsSong"][1][0] > 0:
+            print("                Suns Song: ", catSunsSongEnabled[0],file=spoiler_file)
+        if settingsweights["ContinuousDekuHopping"][1][0] > 0:
+            print("  Continuous Deku Hopping: ", catDekuHopping[0], file=spoiler_file)
+        if settingsweights["IronGoron"][1][0] > 0:
+            print("               Iron Goron: ", catIronGoron[0],file=spoiler_file)
+        if settingsweights["ClimbMostSurfaces"][1][0] > 0:
+            print("      Climb Most Surfaces: ", catClimbSurfaces[0],file=spoiler_file)
+        if settingsweights["HookshotAnySurface"][1][0] > 0:
+            print("     Hookshot Any Surface: ", catHookshotAnySurface[0], file=spoiler_file)
+        if sum(settingsweights["Character"][1]) - settingsweights["Character"][1][0] > 0:
+            print("          Character Model: ", catAdultShuffle[0],file=spoiler_file)
+        if sum(settingsweights["TrapAmount"][1]) - settingsweights["TrapAmount"][1][0] > 0:
+            print("              Trap Amount: ", catTrapEnabled[0],file=spoiler_file)
+        if sum(settingsweights["DamageMode"][1]) - settingsweights["DamageMode"][1][0] > 0:
+            print("              Damage Mode: ", catDamageMode[0],file=spoiler_file)
+        if sum(settingsweights["DamageEffect"][1]) - settingsweights["DamageEffect"][1][0] > 0:
+            print("            Damage Effect: ", catDamageEffect[0],file=spoiler_file)
+        if sum(settingsweights["MovementMode"][1]) - settingsweights["MovementMode"][1][0] > 0:
+            print("            Movement Mode: ", catMovementMode[0],file=spoiler_file)
+        if sum(settingsweights["FloorType"][1]) - settingsweights["FloorType"][1][0] > 0:
+            print("               Floor Type: ", catFloorType[0],file=spoiler_file)
+        if sum(settingsweights["ClockSpeed"][1]) - settingsweights["ClockSpeed"][1][0] > 0:
+            print("              Clock Speed: ", catClockSpeed[0],file=spoiler_file)
         print("",file=spoiler_file)
         print("               Songsanity: ", catSongsanity[0],file=spoiler_file) 
         print("       Shopsanity: Checks: ", catShopsanityChecks[0],file=spoiler_file)
@@ -839,12 +873,8 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
         else:
             print("                Minigames: ", catMinigames[0],file=spoiler_file)
         print("        Bombers' Notebook: ", catBombersNotebook[0],file=spoiler_file)
-        if enemyWeight > 0:
+        if settingsweights["RandomizeEnemies"][1][1] > 0:
             print("            Enemy Shuffle: ", catEnemyShuffle[0],file=spoiler_file)
-        if adultWeight > 0:
-            print("            Adult Shuffle: ", catAdultShuffle[0],file=spoiler_file)
-        if trapNormalWeight > 0: #When more, do sum here
-            print("              Trap Amount: ", catTrapEnabled[0],file=spoiler_file)
         print("---------------------------------------------",file=spoiler_file)
         print("  Gossip slots for always: ",gossipHintsTakenByAlways,file=spoiler_file)
         print("        Hard options used: ",hardOptions,file=spoiler_file)
@@ -873,12 +903,6 @@ argParser.add_argument("-rw", dest="remainHuntChance",type=int,default=0,
                     help="weight of remain hunt seed")
 argParser.add_argument("-bw", dest="baseChance",type=int,default=0,
                     help="weight of base settings")
-argParser.add_argument("-ew", dest="enemyWeight",type=int,default=0,
-                    help="weight of enemy shuffle")
-argParser.add_argument("-a", dest="adultWeight",type=int,default=0,
-                    help="weight of adult model")
-argParser.add_argument("-nta", dest="trapNormalWeight",type=int,default=0,
-                    help="weight of normal trap amount")
 args = argParser.parse_args()
 
 if (args.showVersion):
@@ -894,9 +918,6 @@ optionBaseWeight = args.baseChance
 optionRandomizerExe = args.randomizerExe
 optionOutputCount = args.numberOfSettingsFiles
 optionDontMakeSeed = args.settingsOnly
-optionEnemyWeight = args.enemyWeight
-optionAdultWeight = args.adultWeight
-optionTrapWeight = args.trapNormalWeight
 
 if (len(sys.argv) == 1):
     guiResults = openOptionsGui()
@@ -911,14 +932,14 @@ if (len(sys.argv) == 1):
     optionFairyWeight = guiResults[5]
     optionRemainsWeight = guiResults[6]
     optionBaseWeight = guiResults[7]
-    optionEnemyWeight = guiResults[9]
-    optionAdultWeight = guiResults[10]
-    optionTrapWeight = guiResults[11]
+    optionBaseWeightsFile = guiResults[9]
+    optionFairyWeightsFile = guiResults[10]
+    optionRemainsWeightsFile = guiResults[11]
 
 for i in range(optionOutputCount):
     resultFilename = ''
     while (resultFilename == ''):
-        resultFilename = GenerateMysterySettings(optionSettingsFile, optionFairyFile, optionRemainsFile, optionFairyWeight, optionRemainsWeight, optionBaseWeight, optionEnemyWeight, optionAdultWeight, optionTrapWeight, (str)(i+1))
+        resultFilename = GenerateMysterySettings(optionSettingsFile, optionFairyFile, optionRemainsFile, optionFairyWeight, optionRemainsWeight, optionBaseWeight, optionBaseWeightsFile, optionFairyWeightsFile, optionRemainsWeightsFile, (str)(i+1))
     if (optionDontMakeSeed == False):
         mmrcl = optionRandomizerExe + " -outputpatch -spoiler -settings " + resultFilename
         subprocess.call(mmrcl)
