@@ -167,7 +167,7 @@
     "EnablePictoboxSubject": true,
     "LenientGoronSpikes": false,
     "KeepQuestTradeThroughTime": true,
-    "SpeedupBeavers": false,
+    "SpeedupBeavers": true,
     "SpeedupDampe": true,
     "SpeedupDogRace": true,
     "SpeedupLabFish": true,
