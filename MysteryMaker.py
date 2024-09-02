@@ -10,6 +10,10 @@ from tkinter import filedialog
 
 MYSTERY_MAKER_VERSION = "v3.0 Adv."
 
+generator_dir = os.path.dirname(os.path.abspath(__file__))
+
+weight_folder = os.path.join(generator_dir, "mystery")
+
 def openOptionsGui():
     def guiStartRandomize(*args):
         guiWindow.destroy()
@@ -19,25 +23,25 @@ def openOptionsGui():
         guiWindow.destroy()
 
     def browseForBaseSettingsFile(*args):
-        baseSettingsFilePath.set(filedialog.askopenfilename())
+        baseSettingsFilePath.set(filedialog.askopenfilename(initialdir=weight_folder))
 
     def browseForFairySettingsFile(*args):
-        fairySettingsFilePath.set(filedialog.askopenfilename())
+        fairySettingsFilePath.set(filedialog.askopenfilename(initialdir=weight_folder))
 
     def browseForRemainsSettingsFile(*args):
-        remainsSettingsFilePath.set(filedialog.askopenfilename())
+        remainsSettingsFilePath.set(filedialog.askopenfilename(initialdir=weight_folder))
 
     def browseForBaseWeightsFile(*args):
-        baseWeightsFilePath.set(filedialog.askopenfilename())
+        baseWeightsFilePath.set(filedialog.askopenfilename(initialdir=weight_folder))
 
     def browseForFairyWeightsFile(*args):
-        fairyWeightsFilePath.set(filedialog.askopenfilename())
+        fairyWeightsFilePath.set(filedialog.askopenfilename(initialdir=weight_folder))
 
     def browseForRemainsWeightsFile(*args):
-        remainsWeightsFilePath.set(filedialog.askopenfilename())
+        remainsWeightsFilePath.set(filedialog.askopenfilename(initialdir=weight_folder))
 
     def browseForCommandLineExe(*args):
-        mmrCommandLineExePath.set(filedialog.askopenfilename())
+        mmrCommandLineExePath.set(filedialog.askopenfilename(initialdir=generator_dir))
 
     guiWindow = Tk()
     guiWindow.title("MMR Mystery Maker " + MYSTERY_MAKER_VERSION)
