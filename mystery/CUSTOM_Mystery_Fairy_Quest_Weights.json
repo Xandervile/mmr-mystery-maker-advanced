@@ -12,9 +12,9 @@
       "Rupoor": 1,
       "Nothing": 1},
     "DamageMode": [["Default", "Double", "Quadruple", "OHKO", "Doom"], [100, 0, 0, 0, 0]],
-    "DamageEffect": [["Default", "Fire", "Ice", "Shock", "Knockdown", "Random"], [100, 0, 0, 0, 0, 0]],
+    "DamageEffect": [["Default", "Fire", "Ice", "Shock", "Random"], [100, 0, 0, 0, 0]],
     "MovementMode": [["Default", "HighSpeed", "SuperLowGravity", "Low Gravity", "HighGravity"], [100, 0, 0, 0, 0]],
-    "FloorType": [["Default", "Sand", "Ice", "Snow", "Random"], [100, 0, 0, 0, 0]],
+    "FloorType": [["Default", "Sand", "Ice", "Snow", "Knockdown" ,"Random"], [100, 0, 0, 0, 0, 0]],
     "ClockSpeed": [["Default", "VerySlow", "Slow", "Fast", "VeryFast", "SuperFast"], [100, 0, 0, 0, 0, 0]],
     "EnableSunsSong": [["Enabled", "Disabled"], [0, 100]],
     "AllowFierceDeityAnywhere": [["No change", "Active"], [55, 45]],
@@ -24,7 +24,7 @@
     "StartingBossRemains": [["No change","One","Two"], [100,0,0]],
     "StartingSwordShield": [["No change", "Shuffled"], [75, 25]],
     "StartingRandomItems": [["No change", "Deku Mask", "Goron Mask", "Zora Mask", "Fierce Deity's Mask", "Bow", "Hookshot", "Bomb Bag", "Blast Mask", "Adult's Wallet", "Empty Bottle (Dampe's)", "Bunny Hood", "Great Fairy's Sword", "Magic"], [0,10,10,10,10,10,10,5,5,10,10,5,5,0]],
-    "StartingRandomSong": [["No change", "Epona's Song", "Song of Healing", "Song of Storms", "Sonata of Awakening", "Goron Lullaby", "New Wave Bossa Nova", "Elegy of Emptiness", "Oath to Order"], [0,40,10,10,10,10,10,10,0]],
+    "StartingRandomSong": [["No change", "Epona's Song", "Song of Healing", "Song of Storms", "Sonata of Awakening", "Goron Lullaby", "New Wave Bossa Nova", "Elegy of Emptiness", "Oath to Order"], [0,30,10,10,10,10,10,10,10]],
 
     "Soilsanity": [["No change", "Shuffled"], [70, 30]],
     "Cowsanity": [["No change", "Shuffled"], [70, 30]],
@@ -60,6 +60,7 @@
 
     "HardOptionsLimit": 2,
     "HardOptionLimitBonus": false,
-    "MinimumNonZeroCategories": 5
+    "MinimumNonZeroCategories": 5,
+	"MoonAccess": [["No change", "Items Placed"], [0, 100]]
   }
 }
