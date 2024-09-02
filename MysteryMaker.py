@@ -400,6 +400,13 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
         startListString = AddEntryToListString(startListString,2,"1")
     if catStartingRandomSong[0] == "Oath to Order":
         startListString = AddEntryToListString(startListString,2,"2")
+        if "MoonAccess" in settingsweights:
+            catMoonAccess = random.choices(settingsweights["MoonAccess"][0], settingsweights["MoonAccess"][1])
+            if catMoonAccess[0] == "Items Placed":
+                itemListString = AddStringToListString(itemListString,
+                                                       "------------------------------de0000-------")
+                nonzeroCategories += 1
+
 
     wgtsFierceDeityAnywhere = settingsweights["AllowFierceDeityAnywhere"][1]
     if catStartingRandomItem[0] == "Fierce Deity's Mask":
@@ -575,6 +582,10 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
         itemListString = AddStringToListString(itemListString,
                                                "-100000-ffffff00-----------------------------------")
         nonzeroCategories += 1
+        if "MoonAccess" in settingsweights and catStartingRandomSong[0] == "Oath to Order":
+            if catMoonAccess[0] == "Items Placed":
+                itemListString = AddStringToListString(itemListString,
+                                                       "-fffff------------------------------------")
 
     catButterflyAndWellFairies = random.choices(settingsweights["ButterflyFairyShuffle"][0], settingsweights["ButterflyFairyShuffle"][1])
     if catButterflyAndWellFairies[0] == "Shuffled":
@@ -678,6 +689,10 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
         itemListString = RemoveEntryFromListString(itemListString, 0, "40000")
         settings["OverrideHintPriorities"][0].remove("ItemBottleGoronRace")
         settings["OverrideHintPriorities"][1].append("CollectableDekuShrineGreyBoulderRoomPot1")
+        if "MoonAccess" in settingsweights and catStartingRandomSong[0] == "Oath to Order":
+            if catMoonAccess[0] == "Items Placed":
+                itemListString = AddStringToListString(itemListString,
+                                                       "----------------f000000---------------------")
         gossipHintsTakenByAlways -= 1
         hardOptions += 1
     if catPotsanity[0] != "No change":
@@ -879,6 +894,8 @@ def GenerateMysterySettings(inputFilename, fairyFilename, remainsFilename, fairy
             print("               Floor Type: ", catFloorType[0],file=spoiler_file)
         if sum(settingsweights["ClockSpeed"][1]) - settingsweights["ClockSpeed"][1][0] > 0:
             print("              Clock Speed: ", catClockSpeed[0],file=spoiler_file)
+        if "MoonAccess" in settingsweights and catStartingRandomSong[0] == "Oath to Order":
+            print("              Moon Access: ", catMoonAccess[0],file=spoiler_file)
         print("",file=spoiler_file)
         print("               Songsanity: ", catSongsanity[0],file=spoiler_file) 
         print("       Shopsanity: Checks: ", catShopsanityChecks[0],file=spoiler_file)
