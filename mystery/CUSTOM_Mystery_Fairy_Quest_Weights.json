@@ -39,7 +39,7 @@
     "TokenHouse": [["SSH","OSH"],[1,1]],
     "CratesandBarrelsShuffle": [["No change","Shuffled"], [70,30]],
     "KeatonGrassShuffle": [["No change","Shuffled"], [75,25]],
-    "GossipFairyShuffle": [["No change","Shuffled"], [100,0]],
+    "GossipFairyShuffle": [["No change","Shuffled"], [75,25]],
     "ButterflyFairyShuffle": [["No change","Shuffled"], [75,25]],
     "LongQuestShuffle": [["No change", "Anju and Kafei", "Baby Zoras", "Frog Choir", "All Long Quests"], [35,20,15,30,0]],
     "FrogShuffle": [["No change", "Shuffled"], [65, 35]],
