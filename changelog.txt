@@ -1,4 +1,9 @@
-Advanced Settings release
+3.0a Advanced Settings
+Major Changes:
+- Fixed a few issues regarding Gimmicks options
+- Added the "mystery" folder as a default location for base and weights to be checked (less annoying searching!)
+
+3.0 Advanced Settings release
 Major Changes:
 - Now uses external weights that you can easily edit!
 - Added weights for Gimmick options such as Damage Mode, Adult Link, even Clock Speed!
