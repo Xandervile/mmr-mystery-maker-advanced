@@ -14,7 +14,7 @@ To use:
 - BEFORE running the program, make sure that MMR is set to AT LEAST output a file (be it a WAD, N64 or a .mmr patch), as well as all visual cosmetic things you would like.
 - Load the Python Script, set your weighted chance for each of the Mystery Settings, and randomize!
 
-If you would like to change weights within each setting, open the weights.json associated with the game mode you would like to edit, and change the numbers accordingly.
+If you would like to change weights within each setting, open the weights.json associated with the game mode you would like to edit, and change the numbers accordingly. The custom "Fairy Quest" base and weights are included as an example, as is the WIP "Fairy Quest" branch as an example of how you can modify the generator to produce more varied win conditions/outcomes for your settings.
 
 If you would like to add or change settings, you will need to open the weights.json and add/change the weights and names in there, and then edit the Python script to add your new setting. This can be either adding an item string (see Fairy Shuffling for an example) or a gimmick setting (see Iron Goron).
 
