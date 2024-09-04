@@ -2,6 +2,7 @@
 Major Changes:
 - Fixed a few issues regarding Gimmicks options
 - Added the "mystery" folder as a default location for base and weights to be checked (less annoying searching!)
+- Neverending testing and tweaking of the custom Fairy Quest settings (won't affect default Mystery peeps but still a change!)
 
 3.0 Advanced Settings release
 Major Changes:
