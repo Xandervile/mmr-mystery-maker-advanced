@@ -20,7 +20,7 @@
     "FillWallet": false,
     "AutoInvert": "Never",
     "GiantMaskAnywhere": false,
-    "DoubleArcheryRewards": true,
+    "DoubleArcheryRewards": false,
     "HiddenRupeesSparkle": true,
     "ChestGameMinimap": "Minimal",
     "SaferGlitches": true,
