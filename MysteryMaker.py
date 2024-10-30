@@ -8,7 +8,7 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import filedialog
 
-MYSTERY_MAKER_VERSION = "v3.0 Adv."
+MYSTERY_MAKER_VERSION = "v3.1 Adv."
 
 generator_dir = os.path.dirname(os.path.abspath(__file__))
 
